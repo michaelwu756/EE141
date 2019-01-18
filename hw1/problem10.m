@@ -1,0 +1,15 @@
+k=100;
+z=-2;
+p=[-0.2+0.6i; -0.2-0.6i; -1; -5];
+[a,b]=zp2tf(z,p,k);
+set(gcf,'color','w');
+step(tf(a,b));
+hold on;
+export_fig problem10a.pdf;
+sys=tf(a,b,'InputDelay',4);
+step(sys);
+export_fig problem10b.pdf;
+step(pade(sys,1));
+step(pade(sys,3));
+export_fig problem10c.pdf;
+hold off;

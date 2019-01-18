@@ -275,10 +275,54 @@ Plugging in for our constants yields
 
 \section*{Problem 10}
 
+I plotted the graphs using the following code.
+\begin{verbatim}
+k=100;
+z=-2;
+p=[-0.2+0.6i; -0.2-0.6i; -1; -5];
+[a,b]=zp2tf(z,p,k);
+set(gcf,'color','w');
+step(tf(a,b));
+hold on;
+export_fig problem10a.pdf;
+sys=tf(a,b,'InputDelay',4);
+step(sys);
+export_fig problem10b.pdf;
+step(pade(sys,1));
+step(pade(sys,3));
+export_fig problem10c.pdf;
+hold off;
+\end{verbatim}
+
+\pagebreak
+
 \paragraph{a)}
+
+The non-time delayed step response is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem10a.pdf}
+    \end{center}
+\end{figure}
 
 \paragraph{b)}
 
+The non-time delayed step response along with the time delayed step response is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem10b.pdf}
+    \end{center}
+\end{figure}
+
 \paragraph{c)}
+
+The first order and third order Pad\'e approximations are shown along with the previous graphs
+below. The first order approximation initially goes lower than the third order approximation.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem10c.pdf}
+    \end{center}
+\end{figure}
+
 
 \end{document}
