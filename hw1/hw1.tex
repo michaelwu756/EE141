@@ -263,13 +263,13 @@ Then using our Laplace transform tables we can take the inverse which is
 Finally we can account for the \(100e^{-4s}\) term in \(X(s)\) by multiplying and shifting to yield
 \begin{multline*}
     x(t)=\left(100Ae^{-0.2(t-4)}\cos(0.6(t-4))\right.\\
-    +60(B-0.2A)e^{-0.2(t-4)}\sin(0.6(t-4))\\
+    +\frac{500}{3}(B-0.2A)e^{-0.2(t-4)}\sin(0.6(t-4))\\
     \left.+100Ce^{-(t-4)}+100De^{-5(t-4)}\right)u(t-4)
 \end{multline*}
 Plugging in for our constants yields
 \begin{multline*}
     x(t)=\left(-\frac{1100}{39}e^{-0.2t+0.8}\cos(0.6t-2.4))\right.\\
-    +\frac{276}{13}e^{-0.2t+0.8}\sin(0.6t-2.4)\\
+    +\frac{2300}{39}e^{-0.2t+0.8}\sin(0.6t-2.4)\\
     \left.+25e^{-t+4}+\frac{125}{39}e^{-5t+20}\right)u(t-4)
 \end{multline*}
 
