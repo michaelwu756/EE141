@@ -133,7 +133,7 @@ Therefore this is equivalent to
 We have that
 \[v_o = -\frac{R_b}{R_a}v_2\]
 since there is an inverting amplifier in the middle
-of the circuit. Furthermore we have that\(v_2 = \frac{Q_1}{C_1}\), and so
+of the circuit. Furthermore we have that \(v_2 = \frac{Q_1}{C_1}\), and so
 \[v_2^\prime = \frac{I_1}{C_1}\]
 where \(I_1\) is the current going through the capacitor \(C_1\). The current going through the
 resistor \(R_1\) is equal to \(I_1 + I_a\), where \(I_a\) is the current going through \(R_a\). We can solve
@@ -165,13 +165,91 @@ which is equivalent to the State-Space form
 
 \paragraph{a)}
 
+Assume that movement can only occur along the horizontal axis so we can ignore gravity. Then the position of the payload is given by
+\[x(t)+L\sin(\phi(t))\]
+The force \(F\) on the payload must have an equal and opposite force \(-F\) on the cart. Because this force acts along the horizontal plane, we
+multiply it by \(\sin(\phi(t))\). Then adding together the forces on the cart yields
+the following equation.
+\[Mx^{\prime\prime}(t)=u(t)-bx^{\prime}(t)-F\sin(\phi(t))\]
+The payload's movement is defined by the following equation on the horizontal axis.
+\[m(x(t)+L\sin(\phi(t)))^{\prime\prime} = F\sin(\phi(t))\]
+The payload's movement is defined by the following equation on the vertical axis.
+\[mL\cos(\phi(t))^{\prime\prime} = F\cos(\phi(t)) + mg\]
+We can eliminate \(F\) in the horizontal equation as follows.
+\begin{align*}
+    F\sin(\phi(t))&=-Mx^{\prime\prime}(t)+u(t)-bx^{\prime}(t)\\
+    F\sin(\phi(t))&=mx^{\prime\prime}(t)+mL\cos(\phi(t))\phi^{\prime\prime}(t)-mL\sin(\phi(t))(\phi^\prime(t))^2\\
+    0&=(m+M)x^{\prime\prime}(t)-u(t)+bx^{\prime}(t)\\
+    &\qquad +mL\cos(\phi(t))\phi^{\prime\prime}(t)-mL\sin(\phi(t))(\phi^\prime(t))^2
+\end{align*}
+Then expanding the vertical equation gives the following.
+\begin{align*}
+    F\cos(\phi(t))&=-mL\sin(\phi(t))\phi^{\prime\prime}(t)-mL\cos(\phi(t))(\phi^\prime(t))^2-mg\\
+    F\sin(\phi(t))&=-mL\sin(\phi(t))\tan(\phi(t))\phi^{\prime\prime}(t)-mL\sin(\phi(t))(\phi^\prime(t))^2\\
+    &\qquad- mg\tan(\phi(t))\\
+    0&=-mx^{\prime\prime}(t)-mL\cos(\phi(t))\phi^{\prime\prime}(t)+mL\sin(\phi(t))(\phi^\prime(t))^2\\
+    &\qquad -mL\sin(\phi(t))\tan(\phi(t))\phi^{\prime\prime}(t)-mL\sin(\phi(t))(\phi^\prime(t))^2\\
+    &\qquad - mg\tan(\phi(t))\\
+    0&=-mx^{\prime\prime}(t)-mL\cos(\phi(t))\phi^{\prime\prime}(t)-mL\sin(\phi(t))\tan(\phi(t))\phi^{\prime\prime}(t)\\
+    &\qquad- mg\tan(\phi(t))\\
+    0&=-mx^{\prime\prime}(t)\cos(\phi(t)) - mL\phi^{\prime\prime}(t)(\cos^2(\phi(t))+\sin^2(\phi(t)))\\
+    &\qquad- mg\sin(\phi(t))\\
+    0&=-mx^{\prime\prime}(t)\cos(\phi(t)) - mL\phi^{\prime\prime}(t)-mg\cos(\phi(t))\\
+    0&=x^{\prime\prime}(t)\cos(\phi(t))+L\phi^{\prime\prime}(t)+g\sin(\phi(t))
+\end{align*}
+
 \paragraph{b)}
+
+With \(\phi\) being small, we can approximate \(\sin(\phi)\) with \(\phi\) and \(\cos(\phi)\) with 1. Then our system of equations
+becomes
+\begin{align*}
+    (m+M)x^{\prime\prime}(t)+mL\phi^{\prime\prime}(t)-mL\phi(t)(\phi^\prime(t))^2&=u(t)\\
+    x^{\prime\prime}(t)+L\phi^{\prime\prime}(t)+g\phi(t)&=0
+\end{align*}
+This still contains a \((\phi^\prime(t))^2\) term which is not linear, so we assume that \(\phi\) changes slowly in order to make this
+term negligible. Then our linear system is
+\begin{align*}
+    (m+M)x^{\prime\prime}(t)+mL\phi^{\prime\prime}(t)&=u(t)\\
+    x^{\prime\prime}(t)+L\phi^{\prime\prime}(t)+g\phi(t)&=0
+\end{align*}
+Using the second equation and rewriting it as
+\[v^\prime(t)+L\phi^{\prime\prime}(t)+g\phi(t)=0\]
+we can obtain the transfer function
+\begin{align*}
+    sV(s)+s^2L\Phi(s)+g\Phi(s)&=0\\
+    sV(s)&=-(s^2L+g)\Phi(s)\\
+    \frac{\Phi(s)}{V(s)}&=-\frac{s}{s^2L+g}
+\end{align*}
 
 \paragraph{c)}
 
+If \(v(t)\) is the unit step function, then it has a Laplace transform of \(\frac{1}{s}\). Then we have
+\[\Phi(s)=-\frac{1}{s^2L+g}=-\frac{1}{\sqrt{gL}}\frac{\sqrt{\frac{g}{L}}}{s^2+\frac{g}{L}}\]
+which has an inverse Laplace transform
+\[\phi(t)=-\frac{\sin\left(\sqrt{\frac{g}{L}}t\right)}{\sqrt{gL}}\]
+so it does oscillate with frequency \(\omega_0=\sqrt{\frac{g}{L}}\).
+
 \paragraph{d)}
 
+Taking the Laplace transform of our system of equations yields the following
+\begin{align*}
+    (m+M)s^2X(s)+mLs^2\Phi(s)&=U(s)\\
+    s^2X(s)+Ls^2\Phi(s)+g\Phi(s)&=0\\
+    \Phi(s)&=-\frac{s^2}{Ls^2+g}X(s)\\
+    (m+M)s^2X(s)-\frac{mLs^4}{Ls^2+g}X(s)&=U(s)\\
+    \frac{(m+M)s^2(Ls^2+g)-mLs^4}{Ls^2+g}X(s)&=U(s)\\
+    \frac{s^2(MLs^2+(m+M)g)}{Ls^2+g}X(s)&=U(s)\\
+    \frac{X(s)}{U(s)}&=\frac{Ls^2+g}{s^2(MLs^2+(m+M)g)}
+\end{align*}
+
 \paragraph{e)}
+
+If \(u(t)\) is the unit step function, then it has a Laplace transform of \(\frac{1}{s}\). Then we have
+\[X(s)=\frac{Ls^2+g}{s^3(MLs^2+(m+M)g)}\]
+We can try using the final value theorem by taking the following limit.
+\[\lim_{s\to 0} sX(s)=\lim_{s\to 0} \frac{Ls^2+g}{s^2(MLs^2+(m+M)g)}\]
+The denominator goes to \(0\) while the numerator goes to \(g\), so this limit does not exist and the value goes to \(\infty\).
+Therefore by the final value theorem no limit exists and the system's position increases without bound.
 
 \section*{Problem 4}
 
@@ -199,18 +277,82 @@ This yields the linear system
 
 \section*{Problem 5}
 
+The controller canonical form is shown below. The state is given by the following.
+\[\begin{bmatrix}
+    x_1^\prime\\
+    x_2^\prime\\
+    x_3^\prime
+\end{bmatrix}=\begin{bmatrix}
+    0 & 1 & 0\\
+    0 & 0 & 1\\
+    -\frac{K_0}{K_3} & -\frac{K_1}{K_3} & -\frac{K_2}{K_3}
+\end{bmatrix}\begin{bmatrix}
+    x_1\\
+    x_2\\
+    x_3
+\end{bmatrix} + \begin{bmatrix}
+    0\\
+    0\\
+    \frac{1}{K_3}
+\end{bmatrix}\delta(t)
+\]
+The output is given by the following.
+\[\phi(t) = \begin{bmatrix} K_b & K_a & 0\end{bmatrix}\begin{bmatrix}
+    x_1\\
+    x_2\\
+    x_3
+\end{bmatrix}\]
+
 \section*{Problem 6}
 
 \paragraph{a)}
 
+\begin{align*}
+    sX(s)&=AX(s)+BU(s)\\
+    (sI-A)X(s)&=BU(s)\\
+    X(s)&=(sI-A)^{-1}BU(s)\\
+    Y(s)&=C(sI-A)^{-1}BU(s)\\
+    \frac{Y(s)}{U(s)}&=C(sI-A)^{-1}B
+\end{align*}
+
 \paragraph{b)}
+
+The transfer function in the form
+\[H(s)=K\frac{\Pi_i (s-z_i)}{\Pi_j(s-p_j)}\]
+has the constants
+\begin{align*}
+    K&=0.0003\\
+    z_1&=-0.394\\
+    z_2&=-0.02\\
+    p_1&=-0.656\\
+    p_2&=-0.1889\\
+    p_3&=-0.0042
+\end{align*}
 
 \section*{Problem 7}
 
 \paragraph{a)}
 
+\begin{align*}
+    (s-1)(s-2)-1 &= 0\\
+    s^2-3s+1 &= 0\\
+    s&=\frac{3\pm\sqrt{5}}{2}
+\end{align*}
+One of these poles is positive and one is negative, so it is not stable. As time increases the positive pole will
+cause exponential growth.
+
 \paragraph{b)}
 
+\begin{align*}
+    (s-1+k_1)(s-2)+(k_2-1) &= (s+2)^2 + 1\\
+    s^2-3s+k_1s+k_2-1 &= s^2+4s+5
+\end{align*}
+This gives us \(k_1=7\) and \(k_2=6\).
+
 \paragraph{c)}
+
+No you cannot stabilize the system in this case. The characteristic equation will always contain a term \(s-2\) which means
+that a positive pole exists, leading to instability. The gain term \(k_2\) will have no effect on the pole locations since the
+0 in the bottom left makes it have no impact on the characteristic equation.
 
 \end{document}
