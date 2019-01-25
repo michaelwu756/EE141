@@ -1,0 +1,216 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\begin{document}
+\title{Electrical Engineering 141, Homework 1}
+\date{January 25th, 2019}
+\author{Michael Wu\\UID: 404751542}
+\maketitle
+
+\section*{Problem 1}
+
+\paragraph{a)}
+
+First we have the following.
+\begin{align*}
+    Y_1 &= G_2G_1(R_1 - H_1Y_1)\\
+    &=\frac{G_1G_2}{1+G_1G_2H_1}R_1
+\end{align*}
+Then we can write the transfer function for \(Y_2\) as follows.
+\begin{align*}
+    Y_2 &= G_4(G_3(G_6Y_1-H_2Y_2)+ G_5G_1(R_1-H_1Y_1))\\
+    (1+G_4G_3H_2)Y_2&=G_4G_3G_6Y_1+ G_4G_5G_1R_1-G_4G_5G_1H_1Y_1\\
+    (1+G_4G_3H_2)Y_2&=(G_4G_3G_6-G_4G_5G_1H_1)Y_1+ G_4G_5G_1R_1\\
+    \frac{Y_2}{R_1}&=\left(\frac{G_4G_3G_6-G_4G_5G_1H_1}{1+G_4G_3H_2}\right)\frac{Y_1}{R_1} + \frac{G_4G_5G_1}{1+G_4G_3H_2}
+\end{align*}
+Then we can plug in our earlier expression to obtain the following.
+\begin{align*}
+    \frac{Y_2}{R_1}&=\left(\frac{G_4G_3G_6-G_4G_5G_1H_1}{1+G_4G_3H_2}\right)\frac{G_1G_2}{1+G_1G_2H_1}+\frac{G_4G_5G_1}{1+G_4G_3H_2}\\
+    &=\frac{G_1G_2G_4G_3G_6-G_2G_4G_5G_1^2H_1 + G_4G_5G_1 + G_2G_4G_5G_1^2H_1}{(1+G_4G_3H_2)(1+G_1G_2H_1)}\\
+    &=\frac{G_1G_2G_3G_4G_6 + G_1G_4G_5}{(1+G_3G_4H_2)(1+G_1G_2H_1)}
+\end{align*}
+
+\paragraph{b)}
+
+If we let
+\[G_5(s)=-G_2G_3G_6\]
+then the previous transfer function will be zero.
+
+\section*{Problem 2}
+
+\paragraph{a)}
+
+Across the first resistor we have
+\[V_i-V_a = I_aZ_1\]
+due to Ohm's law. Across the second resistor we also have
+\[V_o-V_a = I_bZ_2\]
+due to Ohm's law. Since the impedance of the OpAmp is infinity, we know that the current into the negative side is zero.
+Then Kirchhoff's law gives us
+\[I_a + I_b = 0\]
+which we can rewrite using the previous equations to obtain the following.
+\begin{align*}
+    \frac{V_i-V_a}{Z_1} + \frac{V_o-V_a}{Z_2} &= 0\\
+    (V_i-V_a)*Z_2 + (V_o-V_a)*Z_1 &= 0\\
+    Z_2V_i + Z_1V_o &= (Z_1+Z_2)V_a\\
+    V_a &= \frac{Z_2}{Z_1+Z_2}V_i + \frac{Z_1}{Z_1+Z_2}V_o
+\end{align*}
+
+\paragraph{b)}
+
+\begin{align*}
+    V_o&=-a\left(\frac{Z_2}{Z_1+Z_2}V_i + \frac{Z_1}{Z_1+Z_2}V_o\right)\\
+    \left(1+\frac{aZ_1}{Z_1+Z_2}\right)V_o&=\frac{-aZ_1}{Z_1+Z_2}V_i\\
+    \frac{V_o}{V_i}&=\frac{\frac{-aZ_1}{Z_1+Z_2}}{1+\frac{aZ_1}{Z_1+Z_2}}
+\end{align*}
+
+\paragraph{c)}
+
+This is equivalent to assuming that \(V_a=0\) in our previous calculations. Then we have across the first resistor
+\[V_i = I_aZ_1\]
+due to Ohm's law. Across the second resistor we also have
+\[V_o = I_bZ_2\]
+due to Ohm's law. Then Kirchhoff's law gives us
+\[I_a + I_b = 0\]
+which we can rewrite as follows.
+\begin{align*}
+    \frac{V_i}{Z_1} + \frac{V_o}{Z_2} &= 0\\
+    \frac{V_o}{Z_2} &= -\frac{V_i}{Z_1}\\
+    \frac{V_o}{V_i} &= -\frac{Z_2}{Z_1}
+\end{align*}
+
+\paragraph{d)}
+
+Let \(I_1\) be a current flowing down across \(Z_1\). Let \(I_2\) be a current flowing to the left across \(Z_2\). Then we have
+that
+\[V_o-V_a = I_2Z_2\]
+and that
+\[V_a = I_1Z_1\]
+and from Kirchoff's law we have that
+\[I_2 = I_1\]
+This means that we know that
+\begin{align*}
+    \frac{V_o-V_a}{Z_2} &= \frac{V_a}{Z_1}\\
+    \frac{V_o}{Z_2} &= \frac{V_a}{Z_1} + \frac{V_a}{Z_2}\\
+    V_a &= \frac{Z_1}{Z_1+Z_2}V_o
+\end{align*}
+Additionally across the OpAmp we know that
+\begin{align*}
+    V_o&=a(V_i-V_a)\\
+    V_o&=a\left(V_i-\frac{Z_1}{Z_1 + Z_2}V_o\right)\\
+    \left(1+\frac{aZ_1}{Z_1+Z_2}\right)V_o&=aV_i\\
+    \frac{V_o}{V_i}&=\frac{a}{1+\frac{aZ_1}{Z_1+Z_2}}\\
+    \frac{V_o}{V_i}&=\frac{a(Z_1+Z_2)}{(1+a)Z_1+Z_2}
+\end{align*}
+As the gain \(a\) becomes very large the limit of this becomes
+\[\frac{V_o}{V_i}=\frac{Z_1+Z_2}{Z_1}\]
+
+\paragraph{e)}
+
+This is the same as the inverting amplifier that we studied earlier, except with impedances
+\[Z_1=\frac{\frac{R_1}{j\omega C_1}}{R_1+\frac{1}{j \omega C_1}}\]
+and
+\[Z_2 = R_2+\frac{1}{j \omega C_2}\]
+which can be rewritten in terms of \(s\) to be
+\begin{align*}
+    Z_1 &=\frac{\frac{R_1}{sC_1}}{R_1+\frac{1}{sC_1}}=\frac{R_1}{1+sR_1C_1}\\
+    Z_2 &=R_2 + \frac{1}{sC_2}=\frac{1+sR_2C_2}{sC_2}
+\end{align*}
+Then our transfer function is given by the following
+\begin{align*}
+    \frac{V_0(s)}{V_i(s)} &= - \frac{(1+sR_2C_2)(1+sR_1C_1)}{sR_1C_2}\\
+    &=- \frac{1+s(R_1C_1+R_2C_2)+s^2R_1C_1R_2C_2}{sR_1C_2}\\
+    &=-\left(\frac{C_1}{C_2}+\frac{R_1}{R_2}\right)-R_2C_1s-\frac{1}{sR_1C_2}
+\end{align*}
+Therefore this is equivalent to
+\begin{align*}
+    \frac{V_0(s)}{V_i(s)} &=K_P + K_Ds + \frac{K_I}{s}\\
+    K_P &= -\frac{C_1}{C_2}-\frac{R_1}{R_2}\\
+    K_D &= -R_2C_1\\
+    K_I &= -\frac{1}{R_1C_2}
+\end{align*}
+
+\paragraph{f)}
+
+We have that
+\[v_o = -\frac{R_b}{R_a}v_2\]
+since there is an inverting amplifier in the middle
+of the circuit. Furthermore we have that\(v_2 = \frac{Q_1}{C_1}\), and so
+\[v_2^\prime = \frac{I_1}{C_1}\]
+where \(I_1\) is the current going through the capacitor \(C_1\). The current going through the
+resistor \(R_1\) is equal to \(I_1 + I_a\), where \(I_a\) is the current going through \(R_a\). We can solve
+\begin{align*}
+    v_2-v_o &= I_a(R_a+R_b)\\
+    \left(1+\frac{R_b}{R_a}\right)v_2&=I_a(R_a+R_b)\\
+    I_a=\frac{v_2}{R_a}
+\end{align*}
+to obtain the expression
+\[v_1-v_2 = \left(C_1v_2^\prime + \frac{v_2}{R_a}\right)R_1\]
+from the left side of the circuit. Similarly the right side of
+the circuit gives us
+\[-\frac{R_b}{R_a}v_2-v_3 = C_2v_3^\prime R_2\]
+Solving for \(v_2^\prime\) and \(v_3^\prime\) yields the system of equations shown below.
+\begin{align*}
+    v_2^\prime &=\left(-\frac{1}{R_1C_1}-\frac{1}{R_aC_1}\right)v_2 + \frac{1}{R_1C_1}v_1\\
+    v_3^\prime &=-\frac{R_b}{R_aR_2C_2}v_2-\frac{1}{R_2C_2}v_3
+\end{align*}
+which is equivalent to the State-Space form
+\[\frac{dx}{dt}=\begin{bmatrix}
+    -\frac{1}{R_1C_1}-\frac{1}{R_aC_1} & 0\\
+    -\frac{R_b}{R_aR_2C_2} & -\frac{1}{R_2C_2}
+\end{bmatrix}x + \begin{bmatrix}
+    \frac{1}{R_1C_1}\\
+    0
+\end{bmatrix}v_1\]
+
+\section*{Problem 3}
+
+\paragraph{a)}
+
+\paragraph{b)}
+
+\paragraph{c)}
+
+\paragraph{d)}
+
+\paragraph{e)}
+
+\section*{Problem 4}
+
+We can convert each equation into a linear approximation by taking the appropriate derivatives evaluated at our initial point.
+For the first equation we have
+\[x_1^\prime \approx u\frac{\partial f_1}{\partial u} + x_2\frac{\partial f_1}{\partial x_2}=0 + x_2\]
+For the second equation we have
+\[x_2^\prime \approx u\frac{\partial f_2}{\partial u} + x_4\frac{\partial f_2}{\partial x_4}=-\pi u - \pi x_4\]
+For the third equation we have
+\[x_3^\prime \approx u\frac{\partial f_3}{\partial u} + x_2\frac{\partial f_3}{\partial x_2}=\pi u + \pi x_2\]
+For the fourth equation we have
+\[x_4^\prime \approx x_1\frac{\partial f_4}{\partial x_1} + x_3\frac{\partial f_4}{\partial x_3}=2x_1 + 4x_3\]
+This yields the linear system
+\[\delta x^\prime = \begin{bmatrix}
+    0 & 1 & 0 & 0\\
+    0 & 0 & 0 & -\pi\\
+    0 & \pi & 0 & 0\\
+    2 & 0 & 4 & 0
+\end{bmatrix}\delta x + \begin{bmatrix}
+    0\\
+    -\pi\\
+    \pi\\
+    0
+\end{bmatrix}\delta u\]
+
+\section*{Problem 5}
+
+\section*{Problem 6}
+
+\paragraph{a)}
+
+\paragraph{b)}
+
+\section*{Problem 7}
+
+\paragraph{a)}
+
+\paragraph{b)}
+
+\paragraph{c)}
+
+\end{document}
