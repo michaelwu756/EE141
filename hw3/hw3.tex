@@ -172,7 +172,75 @@ value of 1.
 
 \paragraph{a)}
 
+Let us find the transfer function for the inner feedback loop.
+\begin{align*}
+    \Omega(s) &= \frac{100}{0.2s+1}K(X(s)-K_g\Omega(s))\\
+    \left(1+KK_g\frac{100}{0.2s+1}\right)\Omega(s)&=\frac{100}{0.2s+1}KX(s)\\
+    \frac{\Omega(s)}{X(s)}&=\frac{100K}{0.2s+1+100KK_g}
+\end{align*}
+Then we can solve for the transfer function of the outer feedback loop.
+\begin{align*}
+    \Theta(s) &= \frac{100K(\Theta_r(s) -\Theta(s))}{20s(0.2s+1+100KK_g)}\\
+    \left(1+\frac{100K}{20s(0.2s+1+100KK_g)}\right)\Theta(s)&=\frac{100K}{20s(0.2s+1+100KK_g)}\Theta_r(s)\\
+    \frac{\Theta(s)}{\Theta_r(s)}&=\frac{25K}{s^2+(5+500KK_g)s+25K}
+\end{align*}
+This is a second order system, so we will try to solve for the following.
+\begin{align*}
+    5+500KK_g&=2\zeta\omega_n\\
+    25K&=\omega_n^2
+\end{align*}
+This can be rewritten as
+\begin{align*}
+    K_g&=\frac{2\zeta\omega_n-5}{20\omega_n^2}\\
+    K&=\frac{\omega_n^2}{25}
+\end{align*}
+Then the percentage overshoot yields the following relationship.
+\begin{align*}
+    e^{-\frac{\pi\zeta}{\sqrt{1-\zeta^2}}} &= 0.1\\
+    -\frac{\pi\zeta}{\sqrt{1-\zeta^2}} &= \ln(0.1)\\
+    \frac{\zeta}{\sqrt{1-\zeta^2}} &= -\frac{\ln(0.1)}{\pi}\\
+    \zeta^2 &= (1-\zeta^2)\frac{\ln^2(10)}{\pi^2}\\
+    \left(1+\frac{\ln^2(10)}{\pi^2}\right)\zeta^2 &= \frac{\ln^2(10)}{\pi^2}\\
+    \zeta &= \frac{\ln(10)}{\sqrt{\pi^2 +\ln^2(10)}}
+\end{align*}
+The settling time yields the following relationship.
+\begin{align*}
+    0.05 &= -\frac{1}{\zeta\omega_n}\ln\left(0.02\sqrt{1-\zeta^2}\right)\\
+    \omega_n &= \frac{20}{\zeta}\ln\left(\frac{50}{\sqrt{1-\zeta^2}}\right)\\
+    \omega_n &= \frac{20}{\frac{\ln(10)}{\sqrt{\pi^2 +\ln^2(10)}}}\ln\left(\frac{50}{\sqrt{1-\left(\frac{\ln(10)}{\sqrt{\pi^2 +\ln^2(10)}}\right)^2}}\right)\\
+    \omega_n &= \frac{20\sqrt{\pi^2 +\ln^2(10)}}{\ln(10)} \ln\left(\frac{50\sqrt{\pi^2 +\ln^2(10)}}{\pi}\right)
+\end{align*}
+Plugging into the earlier expressions yields the following.
+\begin{align*}
+    K_g&=\frac{\left(8\ln\left(\frac{50\sqrt{\pi^2 +\ln^2(10)}}{\pi}\right)-1\right)\ln^2(10)}{1600(\pi^2 +\ln^2(10))\ln^2\left(\frac{50\sqrt{\pi^2 +\ln^2(10)}}{\pi}\right)}\approx 0.00041056\\
+    K&=\frac{16(\pi^2 +\ln^2(10)) \ln^2\left(\frac{50\sqrt{\pi^2 +\ln^2(10)}}{\pi}\right)}{\ln^2(10)}\approx 779.8
+\end{align*}
+
 \paragraph{b)}
+
+I translated my previous results into the following code.
+\scriptsize
+\begin{verbatim}
+K = (16*(pi^2+log(10)^2)*log((50*sqrt(pi^2 +log(10)^2))/pi)^2)/(log(10)^2);
+Kg = (8*log(50*sqrt(pi^2 +log(10)^2)/pi)-1)*log(10)^2/(1600*(pi^2+log(10)^2)...
+*log(50*sqrt(pi^2+log(10)^2)/pi)^2);
+s = tf('s');
+H = 25*K/(s^2 + (5+500*K*Kg)*s + 25*K);
+set(gcf,'color','w');
+step(H);
+export_fig problem5b.pdf;
+stepinfo(H)
+\end{verbatim}
+\normalsize
+This produced a settling time of 0.0424 seconds and a 10\% overshoot, as expected. The slight error in the
+settling time is due to the settling time formula using the envelope only. The real signal settles earlier
+due to the sinusoidal term bringing the response within the settling range before the envelope is entirely
+within the settling range. The step response is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem5b.pdf}
+    \end{center}
+\end{figure}
 
 \section*{Problem 6}
 
