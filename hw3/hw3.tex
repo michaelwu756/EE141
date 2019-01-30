@@ -314,6 +314,29 @@ it is a good approximation.
 
 \section*{Problem 7}
 
+We can shift the characteristic equation to the right by 1 by substituting \(s-1\) in for \(s\). Then the Routh-Hurwitz method
+will indicate how many poles are on the right of the \(\sigma=-1\) line. Our new characteristic equation is the following.
+\begin{align*}
+    (s-1)^3+(6+K)(s-1)^2+(5+6K)(s-1)+5K+1&=0\\
+    (s^3-3s^2+3s-1)+(6+K)(s^2-2s+1)+(5+6K)(s-1)+5K+1&=0\\
+    s^3 +(K+3)s^2 + (4K-4)s +1 &=0
+\end{align*}
+Then the Routh-Hurwitz table can be written as shown below.
+\[\begin{array}{c|c c}
+    s^3 & 1 & 4K-4\\
+    s^2 & K+3 & 1\\
+    s & \frac{4K^2+8K-13}{K+3} & 0\\
+    1 & 1 & 0
+\end{array}\]
+In order for there to be no poles with a real value greater than \(-1\), we must have \(-3<K\) due to the second line of this table.
+So the denominator of the third line must be positive which yields the following.
+\begin{align*}
+    4K^2+8K-13&>0\\
+    K&>-1+\frac{\sqrt{17}}{2}
+\end{align*}
+The other root is slightly below \(-3\), so this does not affect our range for \(K\). Thus we must set \(K>-1+\frac{\sqrt{17}}{2}\)
+in order to satisfy the desired criteria.
+
 \section*{Problem 8}
 
 \paragraph{a)}
