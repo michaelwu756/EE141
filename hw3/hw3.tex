@@ -373,8 +373,51 @@ it is a good approximation.
 
 \paragraph{a)}
 
+\begin{align*}
+    F_\text{out}(s)&= \frac{K_vK_fK_p}{s\left(1+\frac{s}{\omega_p}\right)}(F_\text{in}(s)-F_\text{out}(s))\\
+    \frac{F_\text{out}}{F_\text{in}}&=\frac{K_vK_fK_p}{\frac{s^2}{\omega_p}+s+K_vK_fK_p}\\
+    \frac{F_\text{out}}{F_\text{in}}&=\frac{K_vK_fK_p\omega_p}{s^2+\omega_ps+K_vK_fK_p\omega_p}
+\end{align*}
+
 \paragraph{b)}
 
+If we solve the following system we can put the transfer function into the standard second-order form.
+\begin{align*}
+    \omega_p &= 2\zeta\omega_n\\
+    K_vK_fK_p\omega_p &= \omega_n^2
+\end{align*}
+This has the following solution.
+\begin{align*}
+    \omega_n &= \sqrt{K_vK_fK_p\omega_p}\\
+    \zeta &= \frac{1}{2}\sqrt{\frac{\omega_p}{K_vK_fK_p}}
+\end{align*}
+Since \(\omega_p\) is positively correlated with both \(\omega_n\) and \(\zeta\) while the other constants are positively correlated with \(\omega_n\)
+and negatively correlated with \(\zeta\), we have two degrees of freedom. Thus we can make any arbitrary combination of \(\omega_n\) and \(\zeta\) and
+this transfer function can be rewritten in the standard second order form.
+
 \paragraph{c)}
+
+I plotted the ramp response with the following code.
+\begin{verbatim}
+t = 0:0.001:0.02;
+ramp = 1000*t;
+s = tf('s');
+H = 100^2/(s^2 + 100*s + 100^2);
+[y,t] = lsim(H,ramp,t);
+set(gcf,'color','w');
+hold on;
+plot(t,y);
+plot(t,ramp);
+hold off;
+export_fig problem9c.pdf;
+result = ramp(21) - y(21);
+\end{verbatim}
+This generated the following plot.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem9c.pdf}
+    \end{center}
+\end{figure}
+The PLL frequency tracking error after 20 ms was 12.6871 Hz.
 
 \end{document}

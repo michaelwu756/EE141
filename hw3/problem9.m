@@ -1,0 +1,12 @@
+t = 0:0.001:0.02;
+ramp = 1000*t;
+s = tf('s');
+H = 100^2/(s^2 + 100*s + 100^2);
+[y,t] = lsim(H,ramp,t);
+set(gcf,'color','w');
+hold on;
+plot(t,y);
+plot(t,ramp);
+hold off;
+export_fig problem9c.pdf;
+result = ramp(21) - y(21);
