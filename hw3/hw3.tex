@@ -285,9 +285,9 @@ underdamped response using dominant pole approximation. The following transfer f
 \paragraph{d)}
 
 We have that \(\omega_n=2\) and therefore \(\zeta=\frac{1}{4}\). From this we can find the percentage overshoot as follows.
-\[M_p=e^{-\frac{\pi}{4\sqrt{1-\frac{1}{16}}}}=e^{-\frac{\pi}{\sqrt{15}}}=44.43\%\]
+\[M_p=e^{-\frac{\pi}{4\sqrt{1-\frac{1}{16}}}}=e^{-\frac{\pi}{\sqrt{15}}}\approx44.43\%\]
 We can find the 2\% settling time as follows.
-\[t_s=-\frac{4}{2}\ln\left(0.02\sqrt{1-\frac{1}{16}}\right)=2\ln\left(\frac{200}{\sqrt{15}}\right)=7.89\]
+\[t_s=-\frac{4}{2}\ln\left(0.02\sqrt{1-\frac{1}{16}}\right)=2\ln\left(\frac{200}{\sqrt{15}}\right)\approx7.89\]
 
 \paragraph{e)}
 
@@ -341,7 +341,33 @@ in order to satisfy the desired criteria.
 
 \paragraph{a)}
 
+The pole at \(s=-20\) can be ignored because it dies out very fast. The one at \(s=-1\) is almost canceled by the zero at \(s=-1.05\) so
+we will not include it in our approximation. This leaves \(s^2+4s+8\) in the denominator. We want the approximation \(G_a(s)\) to have
+the same value as \(G(s)\) at \(s=0\) so we choose \(K=\frac{21}{400}\). So we have the following.
+\[G_a(s)=\frac{21}{400(s^2+4s+8)}\]
+
 \paragraph{b)}
+
+I plotted the step response with the following code.
+\begin{verbatim}
+s = tf('s');
+G = (s + 1.05)/((s + 1)*(s + 20)*(s^2 + 4*s + 8));
+Ga = 21/(400*(s^2 + 4*s + 8));
+set(gcf,'color','w');
+hold on;
+step(G);
+step(Ga);
+hold off;
+export_fig problem8b.pdf;
+\end{verbatim}
+This generated the following plot.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem8b.pdf}
+    \end{center}
+\end{figure}
+The second order approximation is the response with the slightly higher peak. It closely matches the fourth order response, so
+it is a good approximation.
 
 \section*{Problem 9}
 
