@@ -246,13 +246,71 @@ within the settling range. The step response is shown below.
 
 \paragraph{a)}
 
+The inner loop has the following transfer function.
+\begin{align*}
+    C(s) &= \frac{1}{s(s+2)(s+4)}(X(s)-K_2sC(s))\\
+    \left(1+\frac{K_2s}{s(s+2)(s+4)}\right)C(s)&=\frac{1}{s(s+2)(s+4)}X(s)\\
+    \frac{C(s)}{X(s)}&=\frac{1}{s(s^2+6s+8+K_2)}
+\end{align*}
+Setting \(K_2=1\) would cause the inner loop to have two equal negative real poles at \(s=-3\). Then the
+entire system has the following transfer function.
+\begin{align*}
+    C(s)&=\frac{1}{s^3+6s^2+9s}K_1(R(s)-C(s))\\
+    \left(1+\frac{K_1}{s^3+6s^2+9s}\right)C(s)&=\frac{1}{s^3+6s^2+9s}K_1R(s)\\
+    \frac{C(s)}{R(s)}&=\frac{K_1}{s^3+6s^2+9s+K_1}
+\end{align*}
+This will have the following Routh-Hurwitz table.
+\[\begin{array}{c|c c}
+    s^3 & 1 & 9\\
+    s^2 & 6 & K_1\\
+    s & \frac{54-K_1}{6} & 0\\
+    1 & K_1 & 0
+\end{array}\]
+This will have no roots with a positive real value if \(0<K_1<54\).
+
 \paragraph{b)}
+
+At \(K_1=54\) the transfer function will have \((s+6)(s^2+9)\) in its denominator so it will have roots at \(\pm 3j\).
+So the system will oscillate with an angular frequency of \(3\).
 
 \paragraph{c)}
 
+At \(K_1=20\) the transfer function will have \((s+5)(s^2+s+4)\) in its denominator which corresponds to a real root
+at \(s=-5\). The complex roots are given by
+\[s=-\frac{1\pm \sqrt{15}j}{2}\]
+and have a absolute value of \(2\), much less than the real root at \(s=-5\). So this can be approximated by a second-order,
+underdamped response using dominant pole approximation. The following transfer function describes the approximated system.
+\[\frac{C(s)}{R(s)}=\frac{4}{s^2+s+4}\]
+
 \paragraph{d)}
 
+We have that \(\omega_n=2\) and therefore \(\zeta=\frac{1}{4}\). From this we can find the percentage overshoot as follows.
+\[M_p=e^{-\frac{\pi}{4\sqrt{1-\frac{1}{16}}}}=e^{-\frac{\pi}{\sqrt{15}}}=44.43\%\]
+We can find the 2\% settling time as follows.
+\[t_s=-\frac{4}{2}\ln\left(0.02\sqrt{1-\frac{1}{16}}\right)=2\ln\left(\frac{200}{\sqrt{15}}\right)=7.89\]
+
 \paragraph{e)}
+
+I plotted the impulse response with the following code.
+\begin{verbatim}
+s = tf('s');
+H1 = 20/(s^3 + 6*s^2 + 9*s + 20);
+H2 = 4/(s^2 + s + 4);
+set(gcf,'color','w');
+hold on;
+impulse(H1);
+impulse(H2);
+hold off;
+export_fig problem6e.pdf;
+\end{verbatim}
+This generated the following plot.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem6e.pdf}
+    \end{center}
+\end{figure}
+The second order approximation is the response with the slightly higher peak. It closely matches the third order response, so
+it is a good approximation.
 
 \section*{Problem 7}
 
