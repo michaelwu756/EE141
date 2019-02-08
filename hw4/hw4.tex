@@ -1,8 +1,5 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath}
-\usepackage{pgfplots}
-\usepackage{graphicx}
-\usepackage{float}
 \begin{document}
 \title{Electrical Engineering 141, Homework 4}
 \date{February 8th, 2019}
@@ -188,13 +185,53 @@ We have the following.
 
 \paragraph{d)}
 
+The two results are related since \(S_H^{H_{cl}}-S_F^{H_{cl}}=1\).
+We would want \(|L(s)|>>1\) in order to reduce the closed-loop sensitivity
+to variations in the feedforward element. We would want \(|L(s)|\approx 0\)
+in order to reduce the closed-loop sensitivity to variations in the feedback
+element. Based on these results, if we were designing a feedback amplifier
+we would want our more accurate components in the feedback element. This
+is because we don't want \(L(s)\) to be very small, since this would mean
+that our feedback loop has little effect. If \(L(s)=0\), we might as well
+not have a feedback loop at all. So then we should assume that \(L(s)\) is
+very large and the feedforward element can handle large disturbances. So the
+feedback element should contain the accurate components since it has the most
+control over the output of the loop.
+
 \section*{Problem 4}
 
 \paragraph{a)}
 
+If \(H>>1\) then we can approximate our closed loop transfer function as \(\frac{1}{F(s)}\).
+
 \paragraph{b)}
 
+Let the open loop gain be denoted by \(G(t)=\frac{Hf(y(t))}{y(t)}\). Then we have the following.
+\begin{align*}
+    y(t)&=H(r(t)-f(y(t)))\\
+    y(t)+Hf(y(t))&=Hr(t)\\
+    (1+G(t))y(t)&=Hr(t)\\
+    \frac{y(t)}{r(t)}&=\frac{H}{1+G}
+\end{align*}
+If the value \(H\) is very large, then this result becomes the following.
+\begin{align*}
+    \frac{y(t)}{r(t)}&=\frac{y(t)}{f(y(t))}\\
+    f(y(t))&=r(t)\\
+    y(t)&=f^{-1}(r(t))
+\end{align*}
+Thus for \(H>>1\), our closed-loop system acts like the inverse of the feedback element.
+
 \paragraph{c)}
+
+Since we assume an ideal OpAmp, all the current through the resistor also goes
+through the diode. We also assume that the voltage at the negative terminal of the OpAmp
+is negligible, so we can treat it as zero. Then we have the following.
+\begin{align*}
+    V_\text{in}&=IR\\
+    V_\text{in}&=I_sRe^{-\frac{V_\text{out}}{V_T}}\\
+    -\frac{V_\text{out}}{V_T}&=\ln\left(\frac{V_\text{in}}{I_sR}\right)\\
+    V_\text{out}&=-V_T\ln\left(\frac{V_\text{in}}{I_sR}\right)
+\end{align*}
 
 \section*{Problem 5}
 
