@@ -1,0 +1,227 @@
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{pgfplots}
+\usepackage{graphicx}
+\usepackage{float}
+\begin{document}
+\title{Electrical Engineering 141, Homework 4}
+\date{February 8th, 2019}
+\author{Michael Wu\\UID: 404751542}
+\maketitle
+
+\section*{Problem 1}
+
+\paragraph{a)}
+
+From the Internal Model Principle, if \(\frac{s}{s+3}C(s)\) includes all the poles of \(R(s)\) as poles,
+then the closed loop system can track a unit step reference input with zero steady state error. Since
+\(R(s)=\frac{1}{s}\) has a pole at \(s=0\), we can design a compensator \(C(s)\) such that it tracks
+the input with zero steady state error.
+
+\paragraph{b)}
+
+From the Internal Model Principle, we can set \(C(s)=\frac{1}{s^2}\) in order for the open loop transfer
+function to contain a pole at \(s\).
+
+\paragraph{c)}
+
+We have the following transfer functions.
+\begin{align*}
+    Y(s)&=\frac{1}{s(s+3)}(R(s)-Y(s))\\
+    \frac{Y(s)}{R(s)}&=\frac{1}{1+s(s+3)}\\
+    H_{ry}(s)&=\frac{1}{s^2+3s+1}
+\end{align*}
+\begin{align*}
+    Y(s)&=\frac{s}{s+3}\left(W(s)-\frac{1}{s^2}Y(s)\right)\\
+    \frac{Y(s)}{W(s)}&=\frac{s^2}{1+s(s+3)}\\
+    H_{wy}(s)&=\frac{s^2}{s^2+3s+1}
+\end{align*}
+\begin{align*}
+    U(s)&=\frac{1}{s^2}\left(R(s)-\frac{s}{s+3}U(s)\right)\\
+    \frac{U(s)}{R(s)}&=\frac{s+3}{s(1+s(s+3))}\\
+    H_{ru}(s)&=\frac{s+3}{s(s^2+3s+1)}
+\end{align*}
+\begin{align*}
+    U(s)&=-\frac{1}{s(s+3)}(W(s)+U(s))\\
+    \frac{U(s)}{W(s)}&=-\frac{1}{s(s+3)+1}\\
+    H_{wu}(s)&=-\frac{1}{s^2+3s+1}
+\end{align*}
+The transfer functions \(H_{ry}(s)\) and \(H_{wu}(s)\) are well behaved since they only have poles in the negative portion of the
+\(s\) plane. The transfer function \(H_{wy}\) will also cause unit step disturbances to go to zero, so it is stable. However,
+the transfer function \(H_{ru}(s)\) has \(s=0\) as a pole. So this means that \(u(t)\) will become unstable and grow without bound
+when \(r(t)\) is the unit step function. So even though letting \(C(s)=\frac{1}{s^2}\) allows us to track the input with zero
+steady state error, it causes our system to become unstable. Thus we cannot implement this compensator in real life.
+
+\section*{Problem 2}
+
+\paragraph{a)}
+
+Since \(P(s)\) already contains \(s=0\) as a pole, the simplest compensator that ensures zero steady state error is \(C(s)=1\).
+This can be verified by solving the following equation.
+\begin{align*}
+    Y(s)&=\frac{1}{s} + \frac{1}{s}\left(\frac{1}{s}-Y(s)\right)\\
+    Y(s)&=\frac{1}{s+1}+\frac{1}{s(s+1)}\\
+    Y(s)&=\frac{1}{s}
+\end{align*}
+So the output is indeed the unit step response.
+
+\paragraph{b)}
+
+If we use the compensator \(C(s)=1\), then our output is given by the following equation.
+\begin{align*}
+    Y(s)&=\frac{1}{s} + \frac{1}{s}\left(\frac{2}{s}-Y(s)\right)\\
+    Y(s)&=\frac{1}{s+1}+\frac{2}{s(s+1)}\\
+    Y(s)&=-\frac{1}{s+1}+\frac{2}{s}
+\end{align*}
+This has an output with a steady state of 2, so our previous compensator would not work.
+We can instead choose a new compensator \(C(s)=2+\frac{1}{s}\). This ensures that
+the system remains stable while also including the pole \(s=0\) of \(W(s)\) in the poles
+of the compensator. The system remains stable because the sensitivity function
+becomes the following.
+\begin{align*}
+    \frac{1}{1+P(s)C(s)}&=\frac{1}{1+\frac{1}{s}\left(2+\frac{1}{s}\right)}\\
+    &=\frac{s^2}{s^2+2s+1}\\
+    &=\frac{s^2}{(s+1)^2}
+\end{align*}
+This has two negative real poles, so it is stable. Furthermore, the gang of four becomes
+the following.
+\begin{align*}
+    \frac{P(s)}{1+P(s)C(s)}&=\frac{s}{(s+1)^2}\\
+    \frac{C(s)}{1+P(s)C(s)}&=\frac{2s^2+s}{(s+1)^2}\\
+    \frac{P(s)C(s)}{1+P(s)C(s)}&=\frac{2s+1}{(s+1)^2}\\
+\end{align*}
+These are all stable, so our system is stable.
+
+\paragraph{c)}
+
+We can solve the following equation to obtain the answer.
+\begin{align*}
+    E(s)&=R(s)-(W_2(s)+P(s)(W_1(s)+C(s)E(s)))\\
+    E(s)&=\frac{1}{s^2}-\left(\frac{1}{s}+\frac{1}{s}\left(\frac{1}{s}+\left(2+\frac{1}{s}\right)E(s)\right)\right)\\
+    E(s)&=\frac{1}{s^2}-\frac{1}{s}-\frac{1}{s^2}-\left(\frac{2s+1}{s^2}\right)E(s)\\
+    E(s)&=-\frac{s}{(s+1)^2}
+\end{align*}
+From the Final Value Theorem we can see that since \(\lim_{s\to0} sE(s)=0\), the steady state tracking
+error will also be zero.
+
+\paragraph{d)}
+
+Our loop transfer function is the following.
+\[P(s)C(s)=\frac{2s+1}{s^2}\]
+Therefore our system is a type 2 system. The value of the corresponding error constant \(K_2\) is the following.
+\[\lim_{s\to0} 2s+1 = 1\]
+
+\paragraph{e)}
+
+We can solve the following equation to obtain the answer.
+\begin{align*}
+    E(s)&=R(s)-(W_2(s)+P(s)(W_1(s)+C(s)E(s)))\\
+    E(s)&=\frac{1}{s^2}-\left(\frac{1}{s^2}+\frac{1}{s}\left(\frac{1}{s}+\left(2+\frac{1}{s}\right)E(s)\right)\right)\\
+    E(s)&=\frac{1}{s^2}-\frac{1}{s^2}-\frac{1}{s^2}-\left(\frac{2s+1}{s^2}\right)E(s)\\
+    E(s)&=-\frac{1}{(s+1)^2}
+\end{align*}
+From the Final Value Theorem we can see that since \(\lim_{s\to0} sE(s)=0\), the steady state tracking
+error will also be zero.
+
+\paragraph{f)}
+
+No we cannot achieve zero steady state tracking error with the same compensator as earlier. This is because the
+compensator \(C(s)\) must include the unstable poles of \(W(s)\) as poles. If \(W(s)\) is the unit ramp function,
+it will have two poles at \(s=0\) while our compensator \(C(s)=2+\frac{1}{s}\) only has one pole at \(s=0\).
+We could modify our compensator to become \(C(s)=3+\frac{3}{s}+\frac{1}{s^2}\) in order to have two poles at
+\(s=0\). This leads to a stable system because the sensitivity function becomes the following.
+\begin{align*}
+    \frac{1}{1+P(s)C(s)}&=\frac{1}{1+\frac{1}{s}\left(3+\frac{3}{s}+\frac{1}{s^2}\right)}\\
+    &=\frac{s^3}{s^3+3s^2+3s+1}\\
+    &=\frac{s^3}{(s+1)^3}
+\end{align*}
+The gang of four then becomes the following.
+\begin{align*}
+    \frac{P(s)}{1+P(s)C(s)}&=\frac{s^2}{(s+1)^3}\\
+    \frac{C(s)}{1+P(s)C(s)}&=\frac{3s^3+3s^2+s}{(s+1)^3}\\
+    \frac{P(s)C(s)}{1+P(s)C(s)}&=\frac{3s^2+3s+1}{(s+1)^3}\\
+\end{align*}
+Since there are no poles in the closed right half plane, our system is stable.
+
+\paragraph{g)}
+
+We have the following equations.
+\begin{align*}
+    Y(s)&=W_2(s)+P(s)C(s)(R(s)-Y(s))\\
+    Y(s)&=\frac{W_2(s)+P(s)C(s)R(s)}{1+P(s)C(s)}\\
+    R(s)&=\frac{1}{s}+\frac{1}{s^2+1}\\
+    W_2(s)&=\frac{s}{s^2+\frac{1}{10000}}
+\end{align*}
+Then plugging in yields the following expression.
+\[Y(s)=\frac{10000s^2(s+1)}{(s^2+s+1)(10000s^2+1)} + \frac{1}{s(s^2+1)}\]
+Notice that the right term has poles \(s=\pm j\), therefore this output signal does
+not have a steady state value. It will oscillate around the value 1.
+
+\section*{Problem 3}
+
+\paragraph{a)}
+
+We have the following.
+\begin{align*}
+    Y(s)&=H(s)(R(s)-F(s)Y(s))\\
+    \frac{Y(s)}{R(s)}&=\frac{H(s)}{1+H(s)F(s)}
+\end{align*}
+
+\paragraph{b)}
+
+\begin{align*}
+    S_H^{H_{cl}}&=\frac{\frac{dH_{cl}}{H_{cl}}}{\frac{dH}{H}}\\
+    &=\frac{dH_{cl}}{dH}\frac{H}{H_{cl}}\\
+    &=\frac{1}{(1+H(s)F(s))^2}(1+H(s)F(s))\\
+    &=\frac{1}{1+L(s)}
+\end{align*}
+
+\paragraph{c)}
+
+\begin{align*}
+    S_F^{H_{cl}}&=\frac{\frac{dH_{cl}}{H_{cl}}}{\frac{dF}{F}}\\
+    &=\frac{dH_{cl}}{dF}\frac{F}{H_{cl}}\\
+    &=-\frac{H(s)^2}{(1+H(s)F(s))^2}\frac{F(s)(1+H(s)F(s))}{H(s)}\\
+    &=-\frac{H(s)F(s)}{1+H(s)F(s)}\\
+    &=-\frac{L(s)}{1+L(s)}
+\end{align*}
+
+\paragraph{d)}
+
+\section*{Problem 4}
+
+\paragraph{a)}
+
+\paragraph{b)}
+
+\paragraph{c)}
+
+\section*{Problem 5}
+
+\paragraph{a)}
+
+\paragraph{b)}
+
+\paragraph{c)}
+
+\paragraph{d)}
+
+\paragraph{e)}
+
+\paragraph{f)}
+
+\paragraph{g)}
+
+\paragraph{h)}
+
+\paragraph{i)}
+
+\paragraph{j)}
+
+\paragraph{k)}
+
+\paragraph{l)}
+
+\paragraph{m)}
+
+\end{document}
