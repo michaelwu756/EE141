@@ -1,5 +1,7 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{float}
 \begin{document}
 \title{Electrical Engineering 141, Homework 4}
 \date{February 8th, 2019}
@@ -237,28 +239,125 @@ is negligible, so we can treat it as zero. Then we have the following.
 
 \paragraph{a)}
 
+The loop transfer function is the following.
+\[L(s)=P(s)C(s)=\frac{3140(s+10)}{s^2(s+100)}\]
+
 \paragraph{b)}
+
+The sensitivity function is the following.
+\[S(s)=\frac{1}{1+L(s)}=\frac{s^2(s+100)}{s^2(s+100)+3140(s+10)}\]
 
 \paragraph{c)}
 
+I ran the following code.
+\begin{verbatim}
+s = tf('s');
+S = s^2*(s + 100)/(s^2*(s + 100) + 3140*(s + 10));
+set(gcf,'color','w');
+bodemag(S);
+export_fig problem5c.pdf;
+[Gm, Pm, Wcg, Wcp] = margin(S);
+\end{verbatim}
+This generated the following plot.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem5c.pdf}
+    \end{center}
+\end{figure}
+I also obtained a crossover frequency of \(27.8076\) rad/s.
+
 \paragraph{d)}
+
+Disturbances with a frequency below \(27.8076\) rad/s would be attenuated.
 
 \paragraph{e)}
 
+The closed loop transfer function is the following.
+\[T(s)=\frac{L(s)}{1+L(s)}=\frac{3140(s+10)}{s^2(s+100)+3140(s+10)}\]
+This has poles at \(-48.98\), \(-28.61\), and \(-22.40\). It has one
+zero at \(-10\). This system is stable since all its poles lie in the
+open left half plane.
+
 \paragraph{f)}
+
+The step response is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem5f.pdf}
+    \end{center}
+\end{figure}
 
 \paragraph{g)}
 
+\[\delta_p(s)=\frac{12.56}{s^2+0.707s+28}\frac{s^2}{6.28}=\frac{2s^2}{s^2+0.707s+28}\]
+
 \paragraph{h)}
+
+Our new loop transfer function is the following.
+\begin{align*}
+    L(s)&=\frac{3140(s+10)}{s^2(s+100)}+\frac{6280(s+10)}{(s+100)(s^2+0.707s+28)}\\
+    &=\frac{3140(s+10)(s^2+0.707s+28)+6280s^2(s+10)}{s^2(s+100)(s^2+0.707s+28)}
+\end{align*}
+Then our closed loop transfer function is the following.
+\[T(s)=9420\frac{s^3+10.2357s^2+11.69s+93.3333}{s^5+100.707s^4+9518.7s^3+99220s^2+110120s+879200}\]
+This has poles at the following locations.
+\[s=-44.57 \pm 80.56j,-11.33,-0.12 \pm 3.02j\]
+So this system is stable since all of its poles lie in the open left half plane.
 
 \paragraph{i)}
 
+The bode plot is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem5i.pdf}
+    \end{center}
+\end{figure}
+The line that is mostly flat then begins increasing on the right is \(\frac{1}{|T(j\omega)|}\)
+and the line that is increasing on the left then goes to zero is \(|\delta_P(j\omega)|\).
+This does not satisfy the Robust Stability criteria because the multiplicative plant
+perturbation has a greater magnitude than the inverse of the closed loop transfer function
+for some frequencies. At these frequencies our system would not be stable.
+
 \paragraph{j)}
+
+The loop transfer function is the following.
+\[L(s)=C_1(s)P(s)=\frac{6.28\times0.0005(s+0.01)}{s^2(s+0.1)}\]
+The closed loop transfer function is the following.
+\[T_1(s)=\frac{L(s)}{1+L(s)}=\frac{0.00314s+0.0000314}{s^3+0.1s^2+0.00314s+0.0000314}\]
+This has poles at the following locations.
+\[s=-0.049, -0.029, -0.022\]
+So this system is stable since all its poles lie in the open left half plane.
 
 \paragraph{k)}
 
+The bode plot is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem5k.pdf}
+    \end{center}
+\end{figure}
+The new line that begins to rise on the left is \(\frac{1}{|T_1(s)|}\). This does
+satisfy the Robust Stability criteria because the multiplicative plant perturbation
+has a smaller magnitude than the inverse of the closed loop transfer function for all
+frequencies.
+
 \paragraph{l)}
 
+The step response is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem5l.pdf}
+    \end{center}
+\end{figure}
+The time scale in this diagram is much longer than with the previous compensator. This
+illustrates the trade off between robustness and stability, as our robust system does
+not cancel out disturbances very quickly.
+
 \paragraph{m)}
+
+The closed loop transfer function is the following.
+\[T(s)=\frac{0.00942s^3+0.0022294s^2+0.0879222s+0.00008792}{s^5+0.807s^4+28.0801s^3+2.80223s^2+0.0879222s+0.00008792}\]
+This has zeros at the following points.
+\[s=-0.35 \pm 5.28j,-0.049 \pm 0.024j,-0.001\]
 
 \end{document}
