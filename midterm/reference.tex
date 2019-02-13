@@ -1,0 +1,122 @@
+\documentclass[10pt]{article}
+\usepackage[margin=0.5in]{geometry}
+\usepackage{amsmath}
+\begin{document}
+\begin{enumerate}
+    \item How to find equilibrium points for nonlinear systems and
+    how to linearize them around a given equilibrium point.
+
+    \(F(x,u)=0\) and linearize with the Jacobian.
+
+    \item How to determine stability from the state-space representation
+    and how to go from state-space to transfer function and vice versa.
+
+    Given the following transfer function.
+    \[\frac{b_ns^n+\ldots+b_0}{a_ns^n+\ldots+a_0}\]
+    We have the following controller canonical form.
+    \[\mathbf{x}^\prime=\begin{bmatrix}
+        0 & 1 & \cdots & 0\\
+        \vdots & \vdots & \ddots & \vdots\\
+        0 & 0 & \cdots & 1\\
+        -\frac{a_0}{a_n} & -\frac{a_1}{a_n} & \cdots & -\frac{a_{n-1}}{a_n}
+    \end{bmatrix}\mathbf{x}
+    + \begin{bmatrix} 0\\ 0\\ \vdots\\ \frac{1}{a_n}\end{bmatrix}\mathbf{u}\]
+    \[\mathbf{y}=\begin{bmatrix}
+        b_0-\frac{b_na_0}{a_n} & \cdots &  b_{n-1}-\frac{b_na_{n-1}}{a_n}
+    \end{bmatrix}\mathbf{x} + \frac{b_n}{a_n}\mathbf{u}\]
+    \begin{align*}
+        sX(s)&=AX(s)+BU(s)\\
+        (sI-A)X(s)&=BU(s)\\
+        X(s)&=(sI-A)^{-1}BU(s)\\
+        Y(s)&=C(sI-A)^{-1}BU(s)+DU(s)\\
+        \frac{Y(s)}{U(s)}&=C(sI-A)^{-1}B+D
+    \end{align*}
+    The eigenvalues of \(A\) are the poles of the transfer function.
+
+    \item How to go from ordinary differential equations to transfer functions and vice versa.
+
+    Use the derivative rule of the Laplace transform.
+
+    \item How to find various input/output relationships in feedback systems.
+    \item How to find the steady-state response of LTI systems to sinusoidal inputs using the
+    fundamental properties of transfer functions.
+
+    Final value theorem.
+
+    \item How the Internal Model Principle can help you design proper compensators in order to
+    track a given reference input with zero steady-state error and/or reject the given disturbances
+    at the output in the steady-state.
+
+    The open loop transfer function \(C(s)P(s)\) must have the input's closed right hand plane poles
+    and the compensator \(C(s)\) must have the disturbance's closed right hand plane poles.
+
+    \item How to plot Root Locus for a given loop transfer function. That includes all the
+    rules we have learned, e.g., the angles condition and the magnitude condition, finding the
+    centroid and the angles of the asymptotes, finding the angles of arrivals to zeros and
+    departures from poles, finding the crossing points with the jw axis using Routh-Hurwitz method, etc.
+
+    We have the conditions on magnitude and angle.
+    \[|K|\frac{|b(s_0)|}{|a(s_0)|}=1\qquad\sum_{i=1}^m\angle(s_0-z_i)-\sum_{j=1}^n\angle(s_0-p_j)=\begin{cases}
+        (2l+1)\pi & K>0\\
+        2l\pi & K<0
+    \end{cases}\]
+    If the number of poles and zeros on real axis to the right is odd, it is on the root locus, otherwise
+    it is on the complementary root locus. With \(n\) poles and \(m\) zeros, \(n-m\) roots go to infinity.
+    The asymptote centroid and angles are given by
+    \[\sigma=\frac{\sum_{j=1}^np_j -\sum_{i=1}^m z_i}{n-m}\qquad\theta_r=\begin{cases}
+        \frac{(2r+1)\pi}{n-m} & K>0\\
+        \frac{2r\pi}{n-m} & K<0
+    \end{cases}\]
+    for \(r=\{0,\ldots, n-m-1\}\). Breakaway points of the characteristic equation \(1+KG(s)H(s)=0\) correspond
+    to when there are multiple real roots at the same value. This occurs when
+    \[\frac{d(G(s)H(s))}{s}=0\]
+    has a roots that also satisfy the characteristic equation for a real \(K\). Use condition on angles to find angle
+    of approach and departure from zeros and poles. Use Routh-Hurwitz method for intersection with imaginary axis.
+
+    \item How to find out the desired closed-loop locations given the specifications on the
+    transient response (e.g., settling time, overshoot percentage, etc.)
+
+    \begin{gather*}
+        \frac{\omega_n^2}{s^2 + 2\zeta\omega_n + \omega_n^2}\\
+        \omega_n(-\zeta\pm\sqrt{\zeta^2-1})\\
+        M_p=e^{-\frac{\pi\zeta}{\sqrt{1-\zeta^2}}}\\
+        t_s=-\frac{1}{\zeta\omega_n}\ln(\beta\sqrt{1-\zeta^2})
+    \end{gather*}
+
+    \item What Lead, Lag, and Lead-Lag compensators are.
+
+    The take the form of \(\frac{s-z_0}{s-p_0}\), and a Lead-Lag compensator is two chained together.
+    Lead compensator has \(p_0<z_0<0\) while lag has \(z_0<p_0<0\).
+
+    \item How to use Root Locus and design Lead compensators in order to place the closed-loop
+    poles in desired locations.
+
+    \item How to design Lag compensators in order to improve the steady-state tracking performance
+    without disturbing the desired locations of the closed-loop poles.
+
+\end{enumerate}
+
+\begin{alignat*}{3}
+    &f(t)&&\text{\quad}&&\mathcal{L}\left\{f(t)\right\}\\
+    &1&&\text{\quad}&&\frac{1}{s}\text{,\quad}s>0\\
+    &e^{at}&&\text{\quad}&&\frac{1}{s-a}\text{,\quad}s>a\\
+    &t^n\text{,\quad}n=\text{positive integer}&&\text{\quad}&&\frac{n!}{s^{n+1}}\text{,\quad}s>0\\
+    &t^p\text{,\quad}p>-1&&\text{\quad}&&\frac{\Gamma(p+1)}{s^{n+1}}\text{,\quad}s>0\\
+    &\sin at&&\text{\quad}&&\frac{a}{s^2+a^2}\text{,\quad}s>0\\
+    &\cos at&&\text{\quad}&&\frac{s}{s^2+a^2}\text{,\quad}s>0\\
+    &\sinh at&&\text{\quad}&&\frac{a}{s^2-a^2}\text{,\quad}s>|a|\\
+    &\cosh at&&\text{\quad}&&\frac{s}{s^2-a^2}\text{,\quad}s>|a|\\
+    &e^{at} \sin bt&&\text{\quad}&&\frac{b}{(s-a)^2+b^2}\text{,\quad}s>a\\
+    &e^{at} \cos bt&&\text{\quad}&&\frac{s-a}{(s-a)^2+b^2}\text{,\quad}s>a\\
+    &t^n e^{at}\text{,\quad}n=\text{positive integer}&&\text{\quad}&&\frac{n!}{(s-a)^{n+1}}\\
+    &u_c(t)&&\text{\quad}&&\frac{e^{-cs}}{s}\text{,\quad}s>0\\
+    &u_c(t)f(t-c)&&\text{\quad}&&e^{-cs}F(s)\\
+    &e^{ct}f(t)&&\text{\quad}&&F(s-c)\\
+    &f(ct)&&\text{\quad}&&\frac{1}{c}F\left(\frac{s}{c}\right)\\
+    &\int_0^t f(t-\tau)g(\tau)\,dt&&\text{\quad}&&F(s)G(s)\\
+    &\delta(t-c)&&\text{\quad}&&e^{-cs}\\
+    &f^{(n)}(t)&&\text{\quad}&&s^n F(s)-s^{n-1}f(0)-\ldots-f^{(n-1)}(0)\\
+    &(-t)^n f(t)&&\text{\quad}&&F^{(n)}(s)
+\end{alignat*}
+
+\end{document}
