@@ -353,6 +353,17 @@ bandwidth and greater response magnitude as the pole magnitude increases. So les
 
 \paragraph{a)}
 
+Let the leftmost resistor and capacitor have a combined impedance of \(Z_1\). Let
+the remaining resisters and capacitors have a combined impedance of \(Z_2\). Then have the following.
+\begin{align*}
+    \frac{V_i-V_1}{Z_1}+\frac{V_o-V_1}{Z_2}&=0\\
+    Z_2V_i-(Z_1+Z_2)V_1+Z_1V_o&=0\\
+    V_1&=\frac{Z_2}{Z_1+Z_2}V_i + \frac{Z_1}{Z_1+Z_2}V_o\\
+\end{align*}
+Since we assume this is an ideal OpAmp, the voltage that enters the negative terminal is effectively zero.
+Thus our transfer function is the following.
+\[\frac{V_o}{V_i}=-\frac{Z_2}{Z_1}\]
+
 \paragraph{b)}
 
 \paragraph{c)}
