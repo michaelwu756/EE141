@@ -149,9 +149,18 @@ My asymptote sketch and the actual bode plot is shown below.
 
 \paragraph{a)}
 
+Experimentally I used MATLAB to obtain the following transfer function.
+\[H(s)=\frac{400\left(\left(\frac{s}{10}\right)+1\right)\left(\left(\frac{s}{10000}\right)+1\right)}{(s+1)\left(\left(\frac{s}{100}\right)+1\right)\left(\left(\frac{s}{1000}\right)+1\right)}\]
+
 \paragraph{b)}
 
+The system is type 0, since there are no pure integrators. This is apparent since a pure integrator would cause the bode plot to have a negative slope on the left side, but this
+bode plot is flat. The steady state value of the open loop system is \(K_p=400\) from the final value theorem. Then the error constant for the closed loop
+system is also \(400\).
+
 \paragraph{c)}
+
+The steady state tracking error for a step input in a unity feedback loop would be \(\frac{1}{1+K_p}=\frac{1}{401}\).
 
 \section*{Problem 6}
 
