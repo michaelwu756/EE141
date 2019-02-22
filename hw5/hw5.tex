@@ -1,4 +1,5 @@
 \documentclass[12pt]{article}
+\usepackage{amsmath}
 \usepackage{graphicx}
 \usepackage{float}
 \begin{document}
@@ -166,8 +167,26 @@ The steady state tracking error for a step input in a unity feedback loop would 
 
 \paragraph{a)}
 
+We can calculate \(\zeta\) from the peak gain.
+\begin{align*}
+    \frac{1}{2\zeta\sqrt{1-\zeta^2}}&=10^{0.6}\\
+    \zeta&=0.126613
+\end{align*}
+We have \(\omega_r=0.9=\omega_n\sqrt{1-2\zeta^2}\). Then we can solve for \(\omega_n\).
+\begin{align*}
+    \omega_n&=\frac{0.9}{\sqrt{1-2\zeta^2}}\\
+    &=0.91478
+\end{align*}
+Then the best second order approximation for this system is the following.
+\[H(s)=\frac{0.83682}{s^2+0.231647s+0.83682}\]
+
 \paragraph{b)}
 
+Using MATLAB I obtained the system bandwidth \(\omega=1.4047\).
+
 \paragraph{c)}
+
+\[e^{-\frac{\pi\zeta}{\sqrt{1-\zeta^2}}}=0.66965\]
+The percentage overshoot is approximately 66.965\%.
 
 \end{document}
