@@ -1,4 +1,5 @@
 s=tf('s');
+set(gcf,'color','w');
 Ha=1/2*(s/5+1)*(s/10+1)/(s*(s+1)*(s+100));
 bodeplot(Ha);
 export_fig problem1a.pdf;
