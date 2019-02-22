@@ -236,13 +236,118 @@ some do not oscillate at all.
 
 \paragraph{a)}
 
+I ran the following code.
+\begin{verbatim}
+s=tf('s');
+H1=1/((s/0.01+1)*(s^2+s+1));
+H2=1/((s/0.1+1)*(s^2+s+1));
+H3=1/((s/1+1)*(s^2+s+1));
+H4=1/((s/10+1)*(s^2+s+1));
+H5=1/((s/100+1)*(s^2+s+1));
+
+set(gcf,'color','w');
+step(H1);
+hold on;
+step(H2);
+step(H3);
+step(H4);
+step(H5);
+hold off;
+export_fig problem3a.pdf;
+\end{verbatim}
+This output the following plot.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem3a.pdf}
+    \end{center}
+\end{figure}
+The plot with the longest settling time corresponds to \(p=0.01\).
+
 \paragraph{b)}
+
+I ran the following code.
+\begin{verbatim}
+stepinfo(H1)
+stepinfo(H2)
+stepinfo(H3)
+stepinfo(H4)
+stepinfo(H5)
+\end{verbatim}
+The following table summarizes the percentage overshoot.
+\begin{center}
+    \begin{tabular}{c|c}
+        \(z\) & Overshoot (\%)\\
+        \hline
+        0.01 & 0\\
+        0.1 & 0\\
+        1 & 8.1391\\
+        10 & 16.2014\\
+        100 & 16.2853
+    \end{tabular}
+\end{center}
 
 \paragraph{c)}
 
+I ran the following code.
+\begin{verbatim}
+option = bodeoptions;
+option.PhaseVisible = 'off';
+bode(H1, option);
+hold on;
+bode(H2, option);
+bode(H3, option);
+bode(H4, option);
+bode(H5, option);
+hold off;
+export_fig problem3c-mag.pdf;
+
+option.PhaseVisible = 'on';
+option.MagVisible = 'off';
+bode(H1, option);
+hold on;
+bode(H2, option);
+bode(H3, option);
+bode(H4, option);
+bode(H5, option);
+hold off;
+export_fig problem3c-phase.pdf;
+\end{verbatim}
+This generated the following plots.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=2.5in]{problem3c-mag.pdf}
+        \includegraphics[width=2.5in]{problem3c-phase.pdf}
+    \end{center}
+\end{figure}
+
 \paragraph{d)}
 
+I ran the following code.
+\begin{verbatim}
+getPeakGain(H1)
+getPeakGain(H2)
+getPeakGain(H3)
+getPeakGain(H4)
+getPeakGain(H5)
+\end{verbatim}
+The following table summarizes the resonant peaks.
+\begin{center}
+    \begin{tabular}{c|c}
+        \(z\) & Resonant Peak\\
+        \hline
+        0.01 & 1\\
+        0.1 & 1\\
+        1 & 1\\
+        10 & 1.1518\\
+        100 & 1.1547
+    \end{tabular}
+\end{center}
+
 \paragraph{e)}
+
+As the third pole moves away from the origin, the time response improves and the settling time decreases significantly.
+However, this leads to overshoot and less stability. In the frequency response, we can see that there is a higher
+bandwidth and greater response magnitude as the pole magnitude increases. So less frequencies are attenuated.
 
 \section*{Problem 4}
 
