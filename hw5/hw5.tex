@@ -363,12 +363,35 @@ the remaining resisters and capacitors have a combined impedance of \(Z_2\). The
 Since we assume this is an ideal OpAmp, the voltage that enters the negative terminal is effectively zero.
 Thus our transfer function is the following.
 \[\frac{V_o}{V_i}=-\frac{Z_2}{Z_1}\]
+By applying the rules for impedance and substituting them into this formula we have the following result.
+\begin{align*}
+    Z_1(s)&=10000+\frac{5\times10^5}{s}\\
+    Z_2(s)&=10000+\frac{\frac{5\times10^{9}}{s}}{10000 +\frac{5\times10^5}{s}}\\
+    C(s)&=-\frac{1}{25}\frac{s\left(\frac{s}{100}+1\right)}{\left(\frac{1}{50}s+1\right)^2}
+\end{align*}
 
 \paragraph{b)}
 
+My asymptote sketch is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3in]{problem4b.jpg}
+    \end{center}
+\end{figure}
+
 \paragraph{c)}
 
+The actual bode plot is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3in]{problem4c.pdf}
+    \end{center}
+\end{figure}
+
 \paragraph{d)}
+
+This is a lag compensator because it adds negative phase. It also has the poles closer to the origin than the zero, which
+is the behavior of a lag compensator.
 
 \section*{Problem 5}
 
