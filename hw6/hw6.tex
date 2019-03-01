@@ -25,11 +25,43 @@ encirclement if \(K<-1\). Thus we want the following inequality to hold in order
 
 \paragraph{a)}
 
+The Nyquist diagram is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem2a.pdf}
+    \end{center}
+\end{figure}
+The plot goes to infinity, and since we choose to not include the open loop pole at \(s=0\), we determine
+that the loop connects on the right half plane. Thus the critical point is not contained within a loop, and
+there are no unstable poles in the closed loop transfer function since the contour does not circle any open
+loop poles.
+
 \paragraph{b)}
+
+The Nyquist plot crosses the real axis when \(j\omega(1+j\omega)(3+j\omega)\) is real. This can be rewritten
+as the following expression.
+\[-4\omega^2+j(3\omega-\omega^3)\]
+This occurs when \(\omega=0,\pm \sqrt{3}\) and the corresponding magnitude of the transfer function is
+\(K\infty\) and \(-\frac{K}{4}\). Thus we must have \(0<K<4\) in order to have a stable closed loop system.
 
 \paragraph{c)}
 
+If we have \(K>4\), then the critical point will have two clockwise loops around it. Then the Nyquist stability
+criterion indicates that there will be two more closed loop poles than open loop poles in the right half plane.
+Since we have zero open loop poles in the right half plane, this means there will be two closed loop poles in
+the right half plane. If we have \(K<0\), then the critical point will have one clockwise loop around it. This corresponds
+to one closed loop pole in the right half plane.
+
 \paragraph{d)}
+
+The root locus plot is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem2d.pdf}
+    \end{center}
+\end{figure}
+This confirms that there will be two unstable poles as \(K\) increases above \(4\). Clearly the complementary
+root locus plot indicates that there will be one unstable real pole if \(K\) is negative.
 
 \section*{Problem 3}
 
