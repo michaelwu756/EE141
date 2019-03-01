@@ -163,16 +163,59 @@ when it intersects the unit circle.
 
 \paragraph{a)}
 
+My asymptote sketch and the actual bode plot is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=2.5in]{problem5a.jpg}
+        \includegraphics[width=2.5in]{problem5a.pdf}
+    \end{center}
+\end{figure}
+
 \paragraph{b)}
+
+The phase curve crosses \(-180\) degrees three times.
 
 \paragraph{c)}
 
+The bode plots are shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem5c.pdf}
+    \end{center}
+\end{figure}
+The bode diagrams differ for lower frequencies because the first plot has a higher initial gain that decreases
+faster as the frequency increases. The first transfer function also has more components than the simplified one,
+so the phase moves up and down more. As the frequencies increase, both transfer functions perform similarly. The
+first transfer function would have lower sensitivity at low frequencies in the closed loop system because its
+gain is higher.
+
 \paragraph{d)}
+
+For \(L(s)\), the gain margin is -17.22 dB and the phase margin is 40.23 degrees. For \(L_2(s)\), the gain margin is
+20 dB and the phase margin is 68.17 degrees. Here we can see that the larger gain and phase margins for \(L_2(s)\) allow
+for better stability than \(L(s)\).
 
 \paragraph{e)}
 
+The upward gain margin of \(L(s)\) is 18.1 dB at a crossover frequency of 897 radians per second.
+
 \paragraph{f)}
 
-\paragraph{g)}
+The Nyquist diagram is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem5f-1.pdf}
+    \end{center}
+\end{figure}
+Around the critical point, the Nyquist diagram looks like the following image.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem5f-2.pdf}
+    \end{center}
+\end{figure}
+The Nyquist diagram for \(L(s)\) does not encircle the critical point, since the inner loop is in the opposite direction
+of the outer loop. The Nyquist diagram for \(L_2(s)\) does not encircle the critical point either, but it does not
+cross the real axis at a point greater than the critical point. This means the downward gain margin is zero. It appears
+to have a similar upward gain margin as \(L(s)\).
 
 \end{document}
