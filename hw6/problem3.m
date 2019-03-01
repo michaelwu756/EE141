@@ -1,0 +1,10 @@
+num = [5000, 25000, 30000];
+den = [1, 50, 600, 0, 0, 0];
+set(gcf,'color','w');
+lnyquist1(num, den);
+export_fig problem3a.pdf;
+H = tf(num, den);
+rlocus(H);
+export_fig problem3d.pdf;
+bode(H);
+export_fig problem3e.pdf;

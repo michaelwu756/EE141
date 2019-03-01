@@ -4,4 +4,6 @@ set(gcf,'color','w');
 nyquist(H);
 export_fig problem2a.pdf;
 rlocus(H);
-export_fig problem2d.pdf;
+export_fig problem2d-reg.pdf;
+rlocus(-H);
+export_fig problem2d-comp.pdf;

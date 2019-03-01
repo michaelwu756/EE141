@@ -57,7 +57,13 @@ to one closed loop pole in the right half plane.
 The root locus plot is shown below.
 \begin{figure}[H]
     \begin{center}
-        \includegraphics[width=3.5in]{problem2d.pdf}
+        \includegraphics[width=3.5in]{problem2d-reg.pdf}
+    \end{center}
+\end{figure}
+The complementary root locus plot is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem2d-comp.pdf}
     \end{center}
 \end{figure}
 This confirms that there will be two unstable poles as \(K\) increases above \(4\). Clearly the complementary
@@ -67,13 +73,47 @@ root locus plot indicates that there will be one unstable real pole if \(K\) is 
 
 \paragraph{a)}
 
+The shape of the Nyquist diagram is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem3a.pdf}
+    \end{center}
+\end{figure}
+
 \paragraph{b)}
+
+The Nyquist diagram encircles the critical point zero times, since it encircles it once in the clockwise direction
+and once in the counterclockwise direction. This means that our system is stable.
 
 \paragraph{c)}
 
+Using a calculator I found that the Nyquist plot crosses the real axis at \(-0.2843\) and \(-4.0705\). This corresponds to
+the following upward and downward gain margin.
+\[0.2457<K<3.517\]
+
 \paragraph{d)}
 
+The root locus is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem3d.pdf}
+    \end{center}
+\end{figure}
+The gain values associated with the \(j\omega\) axis crossings are approximately \(0.25\) and \(3.5\) which agrees
+with my earlier results.
+
 \paragraph{e)}
+
+The bode plot is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem3e.pdf}
+    \end{center}
+\end{figure}
+At the crossover frequency of \(3.23\) radians per second, we have a gain margin of \(-12.2\) dB which corresponds
+to the downward gain margin. At the crossover frequency of \(18.6\) radians per second, we have a gain margin of
+\(10.9\) dB which corresponds to the upward gain margin. At the crossover frequency of \(8.17\) radians per
+second we have a phase margin of \(18.6\) degrees.
 
 \section*{Problem 4}
 
