@@ -119,11 +119,45 @@ second we have a phase margin of \(18.6\) degrees.
 
 \paragraph{a)}
 
+We want the intersection of the Nyquist diagram with the unit circle to be at \(-\frac{\sqrt{2}}{2}\pm j\frac{\sqrt{2}}{2}\)
+in order for the phase margin to be 45 degrees. Then we can solve the following equation.
+\begin{align*}
+    \frac{K_p}{j\omega(j\omega+1)}&=-\frac{\sqrt{2}}{2}+ j\frac{\sqrt{2}}{2}\\
+    \frac{K_p}{-\omega^2+j\omega}&=-\frac{\sqrt{2}}{2}+ j\frac{\sqrt{2}}{2}\\
+    K_p&=\frac{\sqrt{2}}{2}(\omega^2-j\omega -j\omega^2 -\omega)\\
+    K_p&=\frac{\sqrt{2}}{2}(\omega(\omega-1)-j\omega(\omega+1))\\
+    K_p&=\sqrt{2}
+\end{align*}
+We set \(\omega=-1\) in order to make the imaginary term zero.
+
 \paragraph{b)}
+
+Since our phase margin is fairly low, we can use the approximate the damping ratio as \(\zeta=0.45\).
+Then the approximate percent overshoot is given by the following equation.
+\[e^{-\frac{\pi\zeta}{\sqrt{1-\zeta^2}}}=0.2053\]
 
 \paragraph{c)}
 
+The step response is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem4c.pdf}
+    \end{center}
+\end{figure}
+The actual percent overshoot was \(0.233\) and the actual damping ratio is
+\(\frac{1}{2^{1.25}}=0.42\). This is slightly lower than I predicted, leading to a slightly higher
+percent overshoot.
+
 \paragraph{d)}
+
+The Nyquist diagram is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{problem4d.pdf}
+    \end{center}
+\end{figure}
+This does indeed have a 45 degree phase margin since the Nyquist diagram lies on the line \(y=x\)
+when it intersects the unit circle.
 
 \section*{Problem 5}
 
