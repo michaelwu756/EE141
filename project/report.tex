@@ -130,6 +130,32 @@ By substituting into previous conditions we then get \(C_1=1.374430089\times 10^
 
 \section{FTS Plant System Identification}
 
+\paragraph{a)}
+
+From before we have the relationship between \(F\) and \(X\) given by the following equation.
+\[X=\frac{1}{m_1s^2 + b_1s + k_1}F\]
+If we convert this transfer function into the standard second order form we obtain the following result.
+\begin{align*}
+    K\frac{\omega^2}{s^2+2\zeta\omega s + \omega^2}&=\frac{1}{m_1s^2 + b_1s + k_1}\\
+    &=\frac{1}{m_1}\frac{1}{s^2 + \frac{b_1}{m_1}s + \frac{k_1}{m_1}}\\
+    &=\frac{1}{k_1}\frac{\frac{k_1}{m_1}}{s^2 + \frac{b_1}{m_1}s + \frac{k_1}{m_1}}\\
+    K=\frac{1}{k_1}\qquad \omega&=\sqrt{\frac{k_1}{m_1}}\qquad\zeta=\sqrt{\frac{m_1}{k_1}}\frac{b_1}{2m_1}
+\end{align*}
+From visual inspection our DC gain is \(-80\) so we have \(K=10^{-4}\). The corner frequency is \(\omega=10^3\).
+The maximum frequency response is \(20\) decibels above the DC gain, so we have \(\zeta=0.05\). Then we obtain
+the following constants.
+\[k_1=10000 \qquad m_1=0.01 \qquad b_1=1\]
+
+\paragraph{b)}
+
+Since the frequency response had a slope of \(-40\) at the end, I know that there are two more poles than zeros.
+I estimated that the time delay was \(10^{-5}\) seconds, since the phase starts decreasing after \(\omega=10^5\).
+Then I tested various numbers of poles and zeros to obtain the following code for the plant.
+\begin{verbatim}
+Gp = tfest(frd(Gpmag.*exp(1j*Gpphase*pi/180),ww),11,9,0.00001);
+\end{verbatim}
+This exactly matches the given frequency and phase response for the plant.
+
 \section{Position Control Loop Design}
 
 \end{document}

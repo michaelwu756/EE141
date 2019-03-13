@@ -73,9 +73,9 @@ legend('Plant','Compensator','Loop Transfer Function');
 %% Mechanical Loop Design
 % Initialize the following transfer functions
 
-Gp = []     % fitted mechanical plant Gp_fit=X/F
+Gp = tfest(frd(Gpmag.*exp(1j*Gpphase*pi/180),ww),11,9,0.00001);    % fitted mechanical plant Gp_fit=X/F
 
-C_mech = [] % mechanical controller V_set/V_e   
+C_mech = [] % mechanical controller V_set/V_e
 
 L_mech = C_mech*Ga*Kf*Gp*G1; % mechanical loop transfer function
 
