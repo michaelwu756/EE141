@@ -38,19 +38,19 @@ s=tf('s');	% Specify the Laplace variable s as a tf object so you can specify yo
 						
 %% Electrical Loop Design
 % Initialize the following transfer functions and the component values
-P_elec = [] %electrical plant transfer function: Vs/Vc
+P_elec = 5/(4.2 + 0.0002 * s); %electrical plant transfer function: Vs/Vc
 
 % Designing the current controller
-R2 = [] %value of resistor R2
-R3 = [] %value of resistor R3
-C1 = [] %value of capacitor C1
-C2 = [] %value of capacitor C2
+R2 = 5000; %value of resistor R2
+R3 = 1.212623821 * 10^(5); %value of resistor R3
+C1 = 1.374430089 * 10^(-10); %value of capacitor C1
+C2 = 1.374430089 * 10^(-12); %value of capacitor C2
 
-C_elec = [] %electrical controller transfer function -Vc/Vs
+C_elec = (C1 * R3 * s + 1) / (R2 * s * (C1 * C2 * R3 * s + C1 + C2)); %electrical controller transfer function -Vc/Vs
             %specify the transfer function in terms of the resistor and
             %capacitor values given above
-H_vsic = []             % transfer function: Ic/Vs
-H_vsetvr = []           % transfer function: Vr/Vset
+H_vsic = 1;             % transfer function: Ic/Vs
+H_vsetvr = -R2 / R1;           % transfer function: Vr/Vset
             
 L_elec = P_elec * C_elec;    %electrical loop transfer function
 
