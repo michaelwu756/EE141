@@ -189,7 +189,7 @@ I will add a \(\frac{s}{10}+1\) term in the numerator to counteract this after t
 
 In order for the steady-state position tracking error for the sinusoid to be minimized, we want the gain to be very
 high near a frequency of \(\omega=3000\). In order for the noise to have very little effect on the output, we want the gain
-to be very low near a frequency of \(\omega=10000\). Based on these requirements, I added two lead compensators with
+to be very low near a frequency of \(\omega=100000\). Based on these requirements, I added two lead compensators with
 cutoff frequencies at \(\omega=300\) and \(\omega=3000\). This way we have the maximum difference between the gains at these
 two frequencies while still preserving stability. So we have a compensator in the following form.
 \[C^\prime_{mech}=K\frac{\frac{s}{10}+1}{s}\left(\frac{\frac{s}{300}+1}{\frac{s}{3000}+1}\right)^2\]
