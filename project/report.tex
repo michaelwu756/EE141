@@ -124,7 +124,8 @@ equation to obtain the following result.
     \sqrt{\frac{10^2 + 1}{C_2^210^2 + (C_1 + C_2)^2}}&=\frac{3\times10^9}{0.04164116925}\\
     \sqrt{\frac{101}{C_2^2(10^2+101^2)}}&=\frac{3\times10^9}{0.04164116925}\\
     \frac{1}{C_2}&=\sqrt{\frac{10^2+101^2}{101}}\frac{3\times10^9}{0.04164116925}\\
-    C_2&=\sqrt{\frac{101}{10^2+101^2}}\frac{0.04164116925}{3\times10^9}=1.374430089\times 10^{-12}
+    C_2&=\sqrt{\frac{101}{10^2+101^2}}\frac{0.04164116925}{3\times10^9}\\
+    &=1.374430089\times 10^{-12}
 \end{align*}
 By substituting into previous conditions we then get \(C_1=1.374430089\times 10^{-10}\) and \(R_3=1.212623821\times10^5\).
 
@@ -152,10 +153,33 @@ Since the frequency response had a slope of \(-40\) at the end, I know that ther
 I estimated that the time delay was \(10^{-5}\) seconds, since the phase starts decreasing after \(\omega=10^5\).
 Then I tested various numbers of poles and zeros to obtain the following code for the plant.
 \begin{verbatim}
-Gp = tfest(frd(Gpmag.*exp(1j*Gpphase*pi/180),ww),11,9,0.00001);
+Gp = tfest(frd(Gpmag.*exp(1j*Gpphase*pi/180),ww),10,8,0.00001);
 \end{verbatim}
 This exactly matches the given frequency and phase response for the plant.
 
 \section{Position Control Loop Design}
+
+\paragraph{a)}
+
+Let's ignore the noise and obtain the transfer function from the input to the output. It is the following expression.
+\[H = \frac{G_1C_{mech}G_aK_fG_p}{1+G_1C_{mech}G_aK_fG_p}\]
+We can simplify this by letting \(C^\prime_{mech}=G_1G_aK_fC_{mech}\). Then this becomes
+\[H = \frac{C^\prime_{mech}G_p}{1+C^\prime_{mech}G_p}\]
+and we only need to worry about the design for \(C^\prime_{mech}\). In order for the steady state position
+tracking error to be almost fully eliminated, we want the gain to become very high as the frequency on the bode plot
+goes to zero. This can be achieved by adding a lag compensator. I will let this lag compensator have cutoff frequencies
+of \(\omega=1\) and \(\omega=100\) so our gain will be \(40\) dB higher as the frequency decreases.
+In order for the steady-state position tracking error for the sinusoid to be minimized, we want the gain to be very
+high near a frequency of \(\omega=3000\). In order for the noise to have very little effect on the output, we want the gain
+to be very low near a frequency of \(\omega=10000\). Based on these requirements, I added two lead compensators with
+cutoff frequencies at \(\omega=300\) and \(\omega=3000\). This way we have the maximum difference between the gains at these
+two frequencies while still preserving stability. So we have a compensator in the following form.
+\[C^\prime_{mech}=K\frac{\frac{s}{100}+1}{\frac{s}{1}+1}\left(\frac{\frac{s}{300}+1}{\frac{s}{3000}+1}\right)^2\]
+Using the bode plot of the sensitivity function I found that I could set a maximum of \(K=1.27789\times 10^6\) while still
+keeping sensitivity below \(10\) dB. For the actual controller I would need to divide by \(G_1G_aK_f=-5\times 10^6\) to
+obtain the following gain.
+\[K=\frac{1.27789\times10^6}{-5\times 10^6}=-0.255578\]
+Then I have the following controller.
+\[C_{mech}=-0.255578\frac{\frac{s}{100}+1}{\frac{s}{1}+1}\left(\frac{\frac{s}{300}+1}{\frac{s}{3000}+1}\right)^2\]
 
 \end{document}
