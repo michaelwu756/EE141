@@ -78,8 +78,8 @@ Gp = tfest(frd(Gpmag.*exp(1j*Gpphase*pi/180),ww),10,8,0.00001);    % fitted mech
 
 Gain = -0.026462;
 Lag = (s/10 + 1)/(s);
-Lead2 = (s/300 + 1)/(s/3000 + 1);
-C_mech = Gain*Lag*Lead2^2; % mechanical controller V_set/V_e
+Lead = (s/300 + 1)/(s/3000 + 1);
+C_mech = Gain*Lag*Lead^2; % mechanical controller V_set/V_e
 
 L_mech = C_mech*Ga*Kf*Gp*G1; % mechanical loop transfer function
 
