@@ -1,6 +1,8 @@
 \documentclass[12pt]{article}
 \usepackage{amsmath}
 \usepackage{mathtools}
+\usepackage{graphicx}
+\usepackage{float}
 \begin{document}
 \title{Electrical Engineering 141, Final Project Report}
 \date{March 14th, 2019}
@@ -129,6 +131,15 @@ equation to obtain the following result.
 \end{align*}
 By substituting into previous conditions we then get \(C_1=1.374430089\times 10^{-10}\) and \(R_3=1.212623821\times10^5\).
 
+\paragraph{e)}
+
+Here we see that the gain crossover frequency at \(6\times10^5\) and the gain margin greater than \(60\) degrees.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{CurrentControl-e.pdf}
+    \end{center}
+\end{figure}
+
 \section{FTS Plant System Identification}
 
 \paragraph{a)}
@@ -156,6 +167,11 @@ Then I tested various numbers of poles and zeros to obtain the following code fo
 Gp = tfest(frd(Gpmag.*exp(1j*Gpphase*pi/180),ww),10,8,0.00001);
 \end{verbatim}
 This exactly matches the given frequency and phase response for the plant.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{Plant-b.pdf}
+    \end{center}
+\end{figure}
 
 \section{Position Control Loop Design}
 
@@ -182,6 +198,62 @@ keeping sensitivity below \(10\) dB. For the actual controller I would need to d
 obtain the following gain.
 \[K=\frac{1.3231\times10^5}{-5\times 10^6}=-0.026462\]
 Then I have the following controller.
-\[C_{mech}=-0.026462\frac{\frac{s}{10}+1}{\frac{s}{1}+1}\left(\frac{\frac{s}{300}+1}{\frac{s}{3000}+1}\right)^2\]
+\[C_{mech}=-0.026462\frac{\frac{s}{10}+1}{s}\left(\frac{\frac{s}{300}+1}{\frac{s}{3000}+1}\right)^2\]
+
+\paragraph{b)}
+
+The closed loop step response is shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{PositionControl-Step.pdf}
+    \end{center}
+\end{figure}
+The transient response characteristics are shown below.
+\begin{verbatim}
+    RiseTime: 1.3763e-04
+SettlingTime: 0.5475
+ SettlingMin: 0.5896
+ SettlingMax: 1.5025
+   Overshoot: 50.2477
+  Undershoot: 3.4196e-04
+        Peak: 1.5025
+    PeakTime: 2.8863e-04
+\end{verbatim}
+This overshoot is quite large. However, it is not easy to see in the step response graph because it dies out
+very fast. I could have designed the controller with a smaller overshoot but that was not one of my design goals. I could
+reduce it by reducing the gain, but that would mean that the tracking of the sinusoid input would become worse. It
+would increase the settling time. The noise error and sine response are shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{PositionControl-Sine.pdf}
+    \end{center}
+\end{figure}
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{PositionControl-Noise.pdf}
+    \end{center}
+\end{figure}
+
+\paragraph{c)}
+
+The Bode, Nyquist, and Sensitivity plots are shown below.
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{PositionControl-Bode.pdf}
+    \end{center}
+\end{figure}
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{PositionControl-Nyquist.pdf}
+    \end{center}
+\end{figure}
+\begin{figure}[H]
+    \begin{center}
+        \includegraphics[width=3.5in]{PositionControl-Sensitivity.pdf}
+    \end{center}
+\end{figure}
+Here we can tell that the system is stable from the Bode plot since the gain is negative
+at the phase crossover frequency and the phase is above \(-180\) at the gain crossover
+frequency.
 
 \end{document}

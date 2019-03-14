@@ -34,7 +34,7 @@ load 'testfreqdata';    % loads the experimental frequency response data on the
                         % folder
 
 s=tf('s');	% Specify the Laplace variable s as a tf object so you can specify your transfer functions in variable s
-						
+
 						
 %% Electrical Loop Design
 % Initialize the following transfer functions and the component values
@@ -62,13 +62,14 @@ fprintf('DC gain from Vset to Ic: %4.2f\n',dcgain(curr_cl));
 % Plot the Bode diagrams for the plant, the compensator, and the loop transfer function for the
 % electrical loop, and confirm phase margin and gain crossover frequency
 figure;
+set(gcf,'color','w');
 bode(P_elec);
 hold on;
 bode(C_elec);
 margin(L_elec);
 grid on;
 legend('Plant','Compensator','Loop Transfer Function');
-
+%export_fig CurrentControl-e.pdf;
 
 %% Mechanical Loop Design
 % Initialize the following transfer functions
@@ -90,6 +91,7 @@ L_mech = C_mech*Ga*Kf*Gp*G1; % mechanical loop transfer function
 % Plot and compare the Bode plots of the measured freq response data vs the fitted
 % model
 figure;
+set(gcf,'color','w');
 subplot(2,1,1)
 semilogx(ww,20*log10(Gpmag),'b',ww,20*log10(Pm),'g');
 grid on;
@@ -102,9 +104,11 @@ legend('Gp','Gp_f_i_t')
 ylabel('Phase (deg)');
 xlabel('\omega [rad/s]');
 grid on;
+%export_fig Plant-b.pdf;
 
 % Plot the Bode diagrams for the compensator and the loop transfer function
 figure;
+set(gcf,'color','w');
 subplot(2,1,1)
 semilogx(ww,20*log10(Cm),'r',ww,20*log10(Lm),'k');
 grid on;
@@ -117,10 +121,13 @@ legend('C','L')
 ylabel('Phase (deg)');
 xlabel('\omega [rad/s]');
 grid on;
+%export_fig PositionControl-Bode.pdf;
 
 % Plot the Nyquist diagram of the loop transfer function
 figure; 
+set(gcf,'color','w');
 nyquist(L_mech);        % Nyquist Plot
+%export_fig PositionControl-Nyquist.pdf;
 
 L_mechS=ss(L_mech);     % the transfer function is converted to state space
                         % to allow arithmetic with the delay term
@@ -128,6 +135,7 @@ L_mechS=ss(L_mech);     % the transfer function is converted to state space
 % Obtain and plot the Sensitivity function, and confirm max sensitivity                        
 S=feedback(1,L_mechS);  %sensitivity transfer function
 figure;
+set(gcf,'color','w');
 [Sm,Sp]=bode(S);                
 bode(S);
 title('sensitivity')
@@ -135,10 +143,12 @@ grid on;
 maxS = max(Sm);
 fprintf('Maximum Sensitivity (dB): %6.2f\n',20*log10(maxS));
 CL=feedback(L_mechS,1); % closed loop x/x_ref transfer function
+%export_fig PositionControl-Sensitivity.pdf;
 
 %% Simulate Time Response
 %% Simulate and plot the closed-loop step response and report the transient specs as well as the steady-state error 
 figure;
+set(gcf,'color','w');
 step_amp = 1e-6;   % 1um step input in position
 step_resp_params = stepinfo(CL)
 ts = step_resp_params.SettlingTime;
@@ -155,9 +165,11 @@ ylabel('Position [um]')
 xlabel('time [msec]')
 grid on;
 fprintf('RMS SS step tracking error (nm): %6.4f\n',rms(e(ss_indx))*1e9);
+%export_fig PositionControl-Step.pdf;
 
 %% Simulate and plot response to sinusoidal x_ref and report the steady-state error 
 figure;
+set(gcf,'color','w');
 wr=3e3;                     % frequency of the reference signal [rad/s]
 fr=wr/(2*pi);               % frequency of the reference signal [Hz]
 t=0:(1/fr/100):(1/fr)*100;  % simulation time = 100 cycles
@@ -174,9 +186,11 @@ ylabel('Position [um]')
 xlabel('time [msec]')
 grid on;
 fprintf('RMS SS sinuosoidal tracking error (um): %6.4f\n',rms(e(ss_indx))*1e6);
+%export_fig PositionControl-Sine.pdf;
 
 %% Simulate and plot response to measurement noise and report the steady-state output due to noise
 figure;
+set(gcf,'color','w');
 wn=1e5;                     % frequency of the noise [rad/s]
 fn=wn/(2*pi);               % frequency of the noise signal [Hz]
 t=0:(1/fn/100):(1/fn)*100;  % simulation time = 100 cycles
@@ -193,4 +207,5 @@ ylabel('Position [nm]')
 xlabel('time [msec]')
 grid on;
 fprintf('RMS SS noise error (nm): %6.4f\n',rms(e(ss_indx))*1e9);
+%export_fig PositionControl-Noise.pdf;
 
