@@ -1,5 +1,5 @@
 %% ECE141 Final Design Project TEMPLATE
-% Kambiz Shoarinejad, Feb 20, 2019 
+% Kambiz Shoarinejad, Feb 20, 2019
 % Based on MIT 2.14 Design Project By:
 % Darya Amin-Shahidi, May 3., 2011
 % DL Trumper April, 27, 2014
@@ -13,10 +13,10 @@
 
 % - The template will generate the required plots based on your design.
 
-% - The variable names used here match the diagrams and the text of the 
+% - The variable names used here match the diagrams and the text of the
 %   design problem.
 
-% - Do not change any variable names declared here and do not overwrite 
+% - Do not change any variable names declared here and do not overwrite
 % the values given in the problem set.
 
 %% Values and data given in the problem statement
@@ -28,14 +28,14 @@ Rs=0.2;     %value of sense resistance
 Ga=-0.5;    %closed loop low-freq gain of the current amplifier
 G1=5e5;     %capacitive probe sensor's gain
 
-load 'testfreqdata';    % loads the experimental frequency response data on the 
+load 'testfreqdata';    % loads the experimental frequency response data on the
                         % mechanical plant Gp=X/F
                         % Make sure the data file is stored in the same
                         % folder
 
 s=tf('s');	% Specify the Laplace variable s as a tf object so you can specify your transfer functions in variable s
 
-						
+
 %% Electrical Loop Design
 % Initialize the following transfer functions and the component values
 P_elec = 5/(4.2 + 0.0002 * s); %electrical plant transfer function: Vs/Vc
@@ -51,7 +51,7 @@ C_elec = (C1 * R3 * s + 1) / (R2 * s * (C1 * C2 * R3 * s + C1 + C2)); %electrica
             %capacitor values given above
 H_vsic = 1;             % transfer function: Ic/Vs
 H_vsetvr = -R2 / R1;           % transfer function: Vr/Vset
-            
+
 L_elec = P_elec * C_elec;    %electrical loop transfer function
 
 %% Plot and report Loop-shaping results for the electrical loop
@@ -124,19 +124,19 @@ grid on;
 %export_fig PositionControl-Bode.pdf;
 
 % Plot the Nyquist diagram of the loop transfer function
-figure; 
+figure;
 set(gcf,'color','w');
 nyquist(L_mech);        % Nyquist Plot
 %export_fig PositionControl-Nyquist.pdf;
 
 L_mechS=ss(L_mech);     % the transfer function is converted to state space
                         % to allow arithmetic with the delay term
-                        
-% Obtain and plot the Sensitivity function, and confirm max sensitivity                        
+
+% Obtain and plot the Sensitivity function, and confirm max sensitivity
 S=feedback(1,L_mechS);  %sensitivity transfer function
 figure;
 set(gcf,'color','w');
-[Sm,Sp]=bode(S);                
+[Sm,Sp]=bode(S);
 bode(S);
 title('sensitivity')
 grid on;
@@ -146,7 +146,7 @@ CL=feedback(L_mechS,1); % closed loop x/x_ref transfer function
 %export_fig PositionControl-Sensitivity.pdf;
 
 %% Simulate Time Response
-%% Simulate and plot the closed-loop step response and report the transient specs as well as the steady-state error 
+%% Simulate and plot the closed-loop step response and report the transient specs as well as the steady-state error
 figure;
 set(gcf,'color','w');
 step_amp = 1e-6;   % 1um step input in position
@@ -167,14 +167,14 @@ grid on;
 fprintf('RMS SS step tracking error (nm): %6.4f\n',rms(e(ss_indx))*1e9);
 %export_fig PositionControl-Step.pdf;
 
-%% Simulate and plot response to sinusoidal x_ref and report the steady-state error 
+%% Simulate and plot response to sinusoidal x_ref and report the steady-state error
 figure;
 set(gcf,'color','w');
 wr=3e3;                     % frequency of the reference signal [rad/s]
 fr=wr/(2*pi);               % frequency of the reference signal [Hz]
 t=0:(1/fr/100):(1/fr)*100;  % simulation time = 100 cycles
 x_ref=1e-5*sin(wr*t);       % position reference signal (x_ref) [m]
-x=lsim(CL,x_ref,t);         % Simulate 
+x=lsim(CL,x_ref,t);         % Simulate
 e=x'-x_ref;                 % tracking error
 plot(t*1e3,x_ref*1e6,t*1e3,x*1e6,t*1e3,e*1e6);
 ss_indx = t>0.95*t(end);
