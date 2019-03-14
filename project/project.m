@@ -75,8 +75,8 @@ legend('Plant','Compensator','Loop Transfer Function');
 
 Gp = tfest(frd(Gpmag.*exp(1j*Gpphase*pi/180),ww),10,8,0.00001);    % fitted mechanical plant Gp_fit=X/F
 
-Gain = -0.255578;
-Lag = (s/100+ 1)/(s/1 + 1);
+Gain = -0.026462;
+Lag = (s/10 + 1)/(s);
 Lead2 = (s/300 + 1)/(s/3000 + 1);
 C_mech = Gain*Lag*Lead2^2; % mechanical controller V_set/V_e
 

@@ -165,21 +165,23 @@ Let's ignore the noise and obtain the transfer function from the input to the ou
 \[H = \frac{G_1C_{mech}G_aK_fG_p}{1+G_1C_{mech}G_aK_fG_p}\]
 We can simplify this by letting \(C^\prime_{mech}=G_1G_aK_fC_{mech}\). Then this becomes
 \[H = \frac{C^\prime_{mech}G_p}{1+C^\prime_{mech}G_p}\]
-and we only need to worry about the design for \(C^\prime_{mech}\). In order for the steady state position
-tracking error to be almost fully eliminated, we want the gain to become very high as the frequency on the bode plot
-goes to zero. This can be achieved by adding a lag compensator. I will let this lag compensator have cutoff frequencies
-of \(\omega=1\) and \(\omega=100\) so our gain will be \(40\) dB higher as the frequency decreases.
+and we only need to worry about the design for \(C^\prime_{mech}\).
+
+In order for the steady state position tracking error to be almost fully eliminated, we want the gain to
+become very high as the frequency on the bode plot goes to zero. This can be achieved by adding a pole at \(s=0\).
+I will add a \(\frac{s}{10}+1\) term in the numerator to counteract this after the cutoff frequency of \(\omega=10\).
+
 In order for the steady-state position tracking error for the sinusoid to be minimized, we want the gain to be very
 high near a frequency of \(\omega=3000\). In order for the noise to have very little effect on the output, we want the gain
 to be very low near a frequency of \(\omega=10000\). Based on these requirements, I added two lead compensators with
 cutoff frequencies at \(\omega=300\) and \(\omega=3000\). This way we have the maximum difference between the gains at these
 two frequencies while still preserving stability. So we have a compensator in the following form.
-\[C^\prime_{mech}=K\frac{\frac{s}{100}+1}{\frac{s}{1}+1}\left(\frac{\frac{s}{300}+1}{\frac{s}{3000}+1}\right)^2\]
-Using the bode plot of the sensitivity function I found that I could set a maximum of \(K=1.27789\times 10^6\) while still
+\[C^\prime_{mech}=K\frac{\frac{s}{10}+1}{s}\left(\frac{\frac{s}{300}+1}{\frac{s}{3000}+1}\right)^2\]
+Using the bode plot of the sensitivity function I found that I could set a maximum of \(K=1.3231\times 10^5\) while still
 keeping sensitivity below \(10\) dB. For the actual controller I would need to divide by \(G_1G_aK_f=-5\times 10^6\) to
 obtain the following gain.
-\[K=\frac{1.27789\times10^6}{-5\times 10^6}=-0.255578\]
+\[K=\frac{1.3231\times10^5}{-5\times 10^6}=-0.026462\]
 Then I have the following controller.
-\[C_{mech}=-0.255578\frac{\frac{s}{100}+1}{\frac{s}{1}+1}\left(\frac{\frac{s}{300}+1}{\frac{s}{3000}+1}\right)^2\]
+\[C_{mech}=-0.026462\frac{\frac{s}{10}+1}{\frac{s}{1}+1}\left(\frac{\frac{s}{300}+1}{\frac{s}{3000}+1}\right)^2\]
 
 \end{document}
